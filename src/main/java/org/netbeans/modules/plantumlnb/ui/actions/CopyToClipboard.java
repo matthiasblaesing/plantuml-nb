@@ -79,7 +79,7 @@ public final class CopyToClipboard implements ActionListener {
                 SourceStringReader reader = new SourceStringReader(dataObject.getPrimaryFile().asText());
 
                 os = new ByteArrayOutputStream();
-                String desc = reader.generateImage(os, new FileFormatOption(FileFormat.PNG));
+                reader.outputImage(os, new FileFormatOption(FileFormat.PNG));
                 is = new ByteArrayInputStream(os.toByteArray());
                 image = ImageIO.read(is);
             } catch (IOException ex) {

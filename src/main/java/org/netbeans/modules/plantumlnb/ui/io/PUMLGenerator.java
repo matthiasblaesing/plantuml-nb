@@ -45,7 +45,6 @@ import org.netbeans.modules.plantumlnb.ui.options.PlantUMLPanel;
 import static org.netbeans.modules.plantumlnb.ui.options.PlantUMLPanel.DOT_MANUAL_MODE_DOT_PATH;
 
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 import org.openide.util.NbPreferences;
 
 /**
@@ -69,7 +68,7 @@ public class PUMLGenerator {
     private PUMLGenerator() {
     }
 
-    private String generateImage(FileObject inputFile, OutputStream os, FileFormat fileFormat) throws IOException {
+    private void generateImage(FileObject inputFile, OutputStream os, FileFormat fileFormat) throws IOException {
         final boolean manual = NbPreferences.forModule(PlantUMLPanel.class).getBoolean(PlantUMLPanel.DOT_MANUAL_MODE, false);
         if (manual) {
             String path = NbPreferences.forModule(PlantUMLPanel.class).get(DOT_MANUAL_MODE_DOT_PATH, "");
@@ -79,13 +78,14 @@ public class PUMLGenerator {
         }
 
         Charset charset = FileEncodingQuery.getEncoding(inputFile);
-        SourceStringReader reader = new SourceStringReader(new Defines(),
-                inputFile.asText(charset.name()),
-                charset.name(),
-                Collections.<String>emptyList(),
-                new SFile(inputFile.getParent().getPath()));
+        SourceStringReader reader = new SourceStringReader(
+            Defines.createEmpty(),
+            inputFile.asText(charset.name()),
+            charset.name(),
+            Collections.<String>emptyList(),
+            new SFile(inputFile.getParent().getPath()));
         // Write the first image to "os"
-        return reader.generateImage(os, new FileFormatOption(fileFormat));
+        reader.outputImage(os, new FileFormatOption(fileFormat));
 
     }
 
