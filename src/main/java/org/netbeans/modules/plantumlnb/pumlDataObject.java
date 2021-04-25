@@ -23,24 +23,19 @@
  */
 package org.netbeans.modules.plantumlnb;
 
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import org.netbeans.core.api.multiview.MultiViews;
 import org.netbeans.core.spi.multiview.MultiViewElement;
 import org.netbeans.core.spi.multiview.text.MultiViewEditorElement;
 import org.netbeans.modules.plantumlnb.ui.PUMLTopComponent;
-import org.netbeans.modules.plantumlnb.ui.io.PUMLGenerator;
 import org.netbeans.modules.plantumlnb.ui.pumlVisualElement;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -130,15 +125,13 @@ import org.openide.windows.TopComponent;
 })
 public class pumlDataObject extends MultiDataObject implements FileChangeListener, Callable<CloneableEditorSupport.Pane>, PropertyChangeListener {
     private static final Logger LOG = Logger.getLogger(pumlDataObject.class.getName());
-    private FileObject fileObject;
     private AffineTransform currentAT;
 
     public pumlDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);        
-        fileObject = pf;
         pf.addFileChangeListener(this);
         registerEditor("text/x-puml", true);
-        
+
         this.currentAT = new AffineTransform();
     }
 
@@ -146,36 +139,18 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     protected int associateLookup() {
         return 1;
     }
-    
+
     @MultiViewElement.Registration(
         displayName = "#LBL_puml_EDITOR",
-    iconBase = "org/netbeans/modules/plantumlnb/icon.png",
-    mimeType = "text/x-puml",
-    persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED,
-    preferredID = "puml",
-    position = 1200)
+        iconBase = "org/netbeans/modules/plantumlnb/icon.png",
+        mimeType = "text/x-puml",
+        persistenceType = TopComponent.PERSISTENCE_ONLY_OPENED,
+        preferredID = "puml",
+        position = 1200
+    )
     @Messages("LBL_puml_EDITOR=Source")
     public static MultiViewEditorElement createEditor(Lookup lkp) {
         return ((MultiViewEditorElement ) new pumlVisualElement(lkp));
-    }
-    
-
-    
-    // Michael Wever 26/09/2001
-    /** Gets image for the image data 
-     * @return the image or <code>null</code> if image could not be created
-     * @return  java.io.IOException  if an error occurs during reading
-     */
-    public Image getImage() throws IOException {
-        InputStream inputStream = getPrimaryFile().getInputStream();
-        BufferedImage image = null;
-        try {            
-            image = ImageIO.read(inputStream);        
-        } catch(IOException e){
-            Logger.getLogger(pumlDataObject.class.getName()).info(e.getMessage());
-        }
-        
-        return image;       
     }
 
     @Override
@@ -186,24 +161,13 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
 
     @Override
     public void fileChanged(FileEvent fe) {
-        
-        final DataObject.Registry registries = DataObject.getRegistry();
-
         SwingUtilities.invokeLater(new Runnable(){
-
             @Override
             public void run() {
                 PUMLTopComponent tc = PUMLTopComponent.getInstance();
-
-                DataObject[] objects = registries.getModified();
-
-                tc.setCurrentDataObject(pumlDataObject.this);
-
-                tc.setNewContent(PUMLGenerator.getInstance().generateSvgString(fileObject));
+                tc.setNewContent(pumlDataObject.this);
             }
-
         });
-
     }
 
     @Override
@@ -240,5 +204,4 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
         this.currentAT.getMatrix(flatMatrix);
         LOG.log(Level.INFO, "Current Transform: " + Arrays.toString(flatMatrix));
     }
-    
 }
