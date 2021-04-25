@@ -74,16 +74,31 @@ import org.openide.windows.WindowManager;
 /**
  * Top component which displays something.
  */
-@ConvertAsProperties( dtd = "-//org.netbeans.modules.plantumlnb//PUML//EN",
-    autostore = false)
-@TopComponent.Description( preferredID = "PUMLTopComponent",
+@ConvertAsProperties(
+    dtd = "-//org.netbeans.modules.plantumlnb//PUML//EN",
+    autostore = false
+)
+@TopComponent.Description(
+    preferredID = "PUMLTopComponent",
     iconBase = "org/netbeans/modules/plantumlnb/icon.png",
-    persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "properties", openAtStartup = false) //rightSlidingSide
-@ActionID(category = "Window", id = "org.netbeans.modules.plantumlnb.PUMLTopComponent")
-    @ActionReference(path = "Menu/Window" /*, position = 333 */)
-@TopComponent.OpenActionRegistration( displayName = "#CTL_PUMLAction", 
-        preferredID = "PUMLTopComponent")
+    persistenceType = TopComponent.PERSISTENCE_ALWAYS
+)
+@TopComponent.Registration(
+    mode = "properties",
+    openAtStartup = false
+)
+@ActionID(
+    category = "Window",
+    id = "org.netbeans.modules.plantumlnb.PUMLTopComponent"
+)
+@ActionReference(
+    path = "Menu/Window",
+    position = 19042
+)
+@TopComponent.OpenActionRegistration(
+    displayName = "#CTL_PUMLAction",
+    preferredID = "PUMLTopComponent"
+)
 @Messages({
     "CTL_PUMLAction=Plant UML",
     "CTL_PUMLTopComponent=PlantUML",
@@ -563,14 +578,7 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
         }
         
     }
-    
-    public static NBImageIcon getNBImageIcon() {
-        if(PUMLTopComponent.currentNBImageIcon == null && getInstance().getDataObject() != null) {
-            createNBImageIcon(getInstance().currentDataObject);
-        }
-        return PUMLTopComponent.currentNBImageIcon;
-    }    
-    
+
     public static PUMLTopComponent getInstance() {
         return (PUMLTopComponent) WindowManager.getDefault().findTopComponent("PUMLTopComponent");
     }

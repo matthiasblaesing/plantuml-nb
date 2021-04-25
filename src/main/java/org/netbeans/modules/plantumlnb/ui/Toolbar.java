@@ -23,19 +23,10 @@
  */
 package org.netbeans.modules.plantumlnb.ui;
 
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JToolBar;
 import org.netbeans.modules.plantumlnb.DataObjectAccess;
 import org.netbeans.modules.plantumlnb.SVGImagePreviewPanel;
@@ -49,32 +40,23 @@ import org.openide.util.NbBundle;
  */
 public class Toolbar {
 
-    private final Collection toolbarButtons = new ArrayList(11);
-    
-    /**
-     * Component showing image.
-     */
-    private JPanel panel;    
-
     private DataObjectAccess dataObjectAccess;
     private AffineTransform currentAt = null;
     private PUMLJSVGCanvas canvas = null;
     private SVGImagePreviewPanel svgImagePreviewPanel = null;
-    private JSlider zoomSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 10);
-    
+
     private static final Logger logger = Logger.getLogger(SVGImagePreviewPanel.class.getName());
 
     private Toolbar() {}
 
     public JToolBar createToolBar() {
-        
+
         // Definition of toolbar.
         JToolBar toolBar = new JToolBar();
         toolBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE); //NOI18N
         toolBar.setFloatable(false);
-        toolBar.setName(NbBundle.getBundle(Toolbar.class).getString("ACSN_Toolbar"));
+        toolBar.setName(NbBundle.getMessage(Toolbar.class, "ACSN_Toolbar"));
 
-        
         toolBar.add(getExportButton());
         toolBar.add(getZoomInButton());
         toolBar.add(getZoomOutButton());
@@ -91,17 +73,17 @@ public class Toolbar {
         this.dataObjectAccess = doa;
         return createToolBar();
     }
-    
+
     public JLabel getQuickHelpLabel() {
-        JLabel label = new JLabel(ImageUtilities.loadImageIcon("/org/netbeans/modules/plantumlnb/help.png", true));
+        JLabel label = new JLabel(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/help.png", true));
         label.setToolTipText("<html><body>"
                 + "<h4>Shortcuts</h4>"
                 + "<br>"
-                + "&rarr; <strong>Zoom</strong>         ( Ctrl + Left Click )<br>" 
-                + "&rarr; <strong>Realize zoom</strong> ( Shift + Right Click  )<br>" 
-                + "&rarr; <strong>Pan</strong>          ( SHIFT + Left Click )<br>" 
-                + "&rarr; <strong>Rotate</strong>       ( CTRL + Right Click )<br>" 
-                + "&rarr; <strong>Reset</strong>        ( CTRL + SHIFT + Right Click )<br>" 
+                + "&rarr; <strong>Zoom</strong>         ( Ctrl + Left Click )<br>"
+                + "&rarr; <strong>Realize zoom</strong> ( Shift + Right Click  )<br>"
+                + "&rarr; <strong>Pan</strong>          ( SHIFT + Left Click )<br>"
+                + "&rarr; <strong>Rotate</strong>       ( CTRL + Right Click )<br>"
+                + "&rarr; <strong>Reset</strong>        ( CTRL + SHIFT + Right Click )<br>"
                 + "<br>"
                 + "</body></html>"
         );
@@ -110,14 +92,7 @@ public class Toolbar {
 
     public JButton getExportButton() {
         JButton button = new JButton();
-
-        try {
-            Image img = ImageIO.read(getClass().getResource("/org/netbeans/modules/plantumlnb/save.png"));
-            button.setIcon(new ImageIcon(img));
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage()); 
-        }
-
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/save.png", true));
         button.addActionListener(new ExportAction());
 
         return button;
@@ -125,15 +100,8 @@ public class Toolbar {
 
     private JButton getZoomInButton() {
         JButton button = new JButton();
-
-        try {
-            Image img = ImageIO.read(getClass().getResource("/org/netbeans/modules/plantumlnb/zoom-in.png"));
-            button.setIcon(new ImageIcon(img));
-            button.setToolTipText("Zoom in");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage());
-        }
-
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/zoom-in.png", true));
+        button.setToolTipText("Zoom in");
         button.addActionListener(svgImagePreviewPanel.getZoomInActionInstance());
 
         return button;
@@ -141,15 +109,8 @@ public class Toolbar {
 
     private JButton getZoomOutButton() {
         JButton button = new JButton();
-
-        try {
-            Image img = ImageIO.read(getClass().getResource("/org/netbeans/modules/plantumlnb/zoom-out.png"));
-            button.setIcon(new ImageIcon(img));
-            button.setToolTipText("Zoom Out");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage());
-        }
-
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/zoom-out.png", true));
+        button.setToolTipText("Zoom Out");
         button.addActionListener(svgImagePreviewPanel.getZoomOutActionInstance());
 
         return button;
@@ -157,11 +118,11 @@ public class Toolbar {
 
     /**
      * CCW = Counter Clockwise
-     * @return 
+     * @return
      */
     private JButton getCCWRotateButton() {
         JButton button = new JButton();
-        button.setIcon(ImageUtilities.loadImageIcon("/org/netbeans/modules/plantumlnb/rotate_ccw.png", true));
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/rotate_ccw.png", true));
         button.setToolTipText("Rotate Counter Clockwise");
         button.addActionListener(svgImagePreviewPanel.getCCWRotateActionInstance());
 
@@ -170,12 +131,12 @@ public class Toolbar {
 
     /**
      * Clockwise
-     * 
-     * @return 
+     *
+     * @return
      */
     private JButton getCWRotateButton() {
         JButton button = new JButton();
-        button.setIcon(ImageUtilities.loadImageIcon("/org/netbeans/modules/plantumlnb/rotate_cw.png", true));
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/rotate_cw.png", true));
         button.setToolTipText("Rotate Clockwise");
         button.addActionListener(svgImagePreviewPanel.getCWRotateActionInstance());
 
@@ -184,14 +145,8 @@ public class Toolbar {
 
     private JButton getResetButton() {
         JButton button = new JButton();
-
-        try {
-            Image img = ImageIO.read(getClass().getResource("/org/netbeans/modules/plantumlnb/zoom-fit.png"));
-            button.setIcon(new ImageIcon(img));
-            button.setToolTipText("Reset");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage());
-        }
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/zoom-fit.png", true));
+        button.setToolTipText("Reset");
 
         button.addActionListener(svgImagePreviewPanel.getResetTransformAction());
 
@@ -200,23 +155,14 @@ public class Toolbar {
 
     private JButton getOpenInBrowserButton() {
         JButton button = new JButton();
-
-        try {
-            Image img = ImageIO.read(getClass().getResource("/org/netbeans/modules/plantumlnb/browser_generic_16x.png"));
-            button.setIcon(new ImageIcon(img));
-            button.setToolTipText("Open in Browser");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage());
-        }
+        button.setIcon(ImageUtilities.loadImageIcon("org/netbeans/modules/plantumlnb/browser_generic_16x.png", true));
+        button.setToolTipText("Open in Browser");
 
         button.addActionListener(svgImagePreviewPanel.getOpenInBrowserAction());
 
         return button;
     }
 
-    private NBImageIcon retrieveImage() {
-        return PUMLTopComponent.getNBImageIcon();
-    }
     private static Toolbar instance;
 
     public static Toolbar instance() {

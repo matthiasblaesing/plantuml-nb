@@ -36,7 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
-import net.sourceforge.plantuml.FileFormat;
 import org.netbeans.core.api.multiview.MultiViews;
 import org.netbeans.core.spi.multiview.MultiViewElement;
 import org.netbeans.core.spi.multiview.text.MultiViewEditorElement;
@@ -66,68 +65,70 @@ import org.openide.windows.TopComponent;
     "LBL_PUML_LOADER=Files of PUML"
 })
 @MIMEResolver.ExtensionRegistration(
-        displayName = "#LBL_PUML_LOADER",
-mimeType = "text/x-puml",
-extension = {"puml", "PUML"})
+    displayName = "#LBL_PUML_LOADER",
+    mimeType = "text/x-puml",
+    extension = {"puml", "PUML"},
+    position = 2043
+)
 @DataObject.Registration(
     mimeType = "text/x-puml",
-iconBase = "org/netbeans/modules/plantumlnb/icon.png",
-displayName = "#LBL_PUML_LOADER",
-position = 300)
+    iconBase = "org/netbeans/modules/plantumlnb/icon.png",
+    displayName = "#LBL_PUML_LOADER",
+    position = 300
+)
 @ActionReferences({
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.OpenAction"),
-    position = 100,
-    separatorAfter = 200),
+        id = @ActionID(category = "System", id = "org.openide.actions.OpenAction"),
+        position = 100,
+        separatorAfter = 200
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "Edit", id = "org.openide.actions.CutAction"),
-    position = 300),
+        id = @ActionID(category = "Edit", id = "org.openide.actions.CutAction"),
+        position = 300
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "Edit", id = "org.openide.actions.CopyAction"),
-    position = 400,
-    separatorAfter = 500),
+        id = @ActionID(category = "Edit", id = "org.openide.actions.CopyAction"),
+        position = 400,
+        separatorAfter = 500
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "Edit", id = "org.openide.actions.DeleteAction"),
-    position = 600),
+        id = @ActionID(category = "Edit", id = "org.openide.actions.DeleteAction"),
+        position = 600
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.RenameAction"),
-    position = 700,
-    separatorAfter = 800),
+        id = @ActionID(category = "System", id = "org.openide.actions.RenameAction"),
+        position = 700,
+        separatorAfter = 800
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.SaveAsTemplateAction"),
-    position = 900,
-    separatorAfter = 1000),
+        id = @ActionID(category = "System", id = "org.openide.actions.SaveAsTemplateAction"),
+        position = 900,
+        separatorAfter = 1000
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.FileSystemAction"),
-    position = 1100,
-    separatorAfter = 1200),
+        id = @ActionID(category = "System", id = "org.openide.actions.FileSystemAction"),
+        position = 1100,
+        separatorAfter = 1200
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.ToolsAction"),
-    position = 1300),
+        id = @ActionID(category = "System", id = "org.openide.actions.ToolsAction"),
+        position = 1300
+    ),
     @ActionReference(
         path = "Loaders/text/x-puml/Actions",
-    id =
-    @ActionID(category = "System", id = "org.openide.actions.PropertiesAction"),
-    position = 1400)
+        id = @ActionID(category = "System", id = "org.openide.actions.PropertiesAction"),
+        position = 1400
+    )
 })
 public class pumlDataObject extends MultiDataObject implements FileChangeListener, Callable<CloneableEditorSupport.Pane>, PropertyChangeListener {
-    private String content;
     private static final Logger LOG = Logger.getLogger(pumlDataObject.class.getName());
     private FileObject fileObject;
     private AffineTransform currentAT;
@@ -187,7 +188,7 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     public void fileChanged(FileEvent fe) {
         
         final DataObject.Registry registries = DataObject.getRegistry();
-        
+
         SwingUtilities.invokeLater(new Runnable(){
 
             @Override
@@ -200,9 +201,9 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
 
                 tc.setNewContent(PUMLGenerator.getInstance().generateSvgString(fileObject));
             }
-            
-        });        
-        
+
+        });
+
     }
 
     @Override
