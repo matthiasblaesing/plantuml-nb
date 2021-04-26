@@ -24,7 +24,6 @@
 package org.netbeans.modules.plantumlnb.ui;
 
 import java.awt.geom.AffineTransform;
-import javax.swing.JPopupMenu;
 import org.apache.batik.swing.JSVGCanvas;
 
 /**
@@ -32,22 +31,13 @@ import org.apache.batik.swing.JSVGCanvas;
  * @author Venkat Akkineni <sriguru@users.sourceforge.net>
  */
 public class PUMLJSVGCanvas extends JSVGCanvas {
-    
+
     public static final String renderingTransformPropertyName = "renderingTransform";
-     
+
     @Override
     public void setRenderingTransform(AffineTransform newAt) {
         AffineTransform oldAt = getRenderingTransform();
         super.setRenderingTransform(newAt);
         pcs.firePropertyChange(renderingTransformPropertyName, oldAt, newAt);
-    }
-
-    public JPopupMenu getComponentPopupMenu() {
-        // Prevent Popup Menu when an interaction is running
-        if(interactor != null) {
-            return null;
-        } else {
-            return super.getComponentPopupMenu();
-        }
     }
 }

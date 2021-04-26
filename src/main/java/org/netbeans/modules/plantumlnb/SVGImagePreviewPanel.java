@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -47,6 +49,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
 import org.apache.batik.swing.gvt.GVTTreeRendererListener;
@@ -87,25 +90,49 @@ public class SVGImagePreviewPanel extends JPanel {
 
         //http://mail-archives.apache.org/mod_mbox/xmlgraphics-batik-users/200811.mbox/%3C82615BD530B1FA449BAEB584F01FFDBA0169E9FE@UHQEX30.ad.jfcom.mil%3E
         //http://mcc.id.au/2007/09/batik-course/
-        
-        
-//        canvas.addGVTTreeRendererListener(new ResizeGVTTreeRendererListener());       
+
+        JPopupMenu popup = null;
+        //add popup menu
+        List<? extends Action> actionsForPath = Utilities.actionsForPath("Actions/PlantUML/ImageView/Popupmenu");
+        if (!actionsForPath.isEmpty()) {
+            Action[] actions = actionsForPath.toArray(new Action[actionsForPath.size()]);
+            popup = Utilities.actionsToPopup(actions, Lookup.EMPTY);
+        }
+
+        final JPopupMenu finalPopup = popup;
+
         addComponentListener(new ResizeListener());
         canvas.setEnableImageZoomInteractor(true);
         canvas.setEnablePanInteractor(true);
         canvas.setEnableResetTransformInteractor(true);
         canvas.setEnableRotateInteractor(true);
         canvas.setEnableZoomInteractor(true);
-        
-        //add popup menu
-        List<? extends Action> actionsForPath = Utilities.actionsForPath("Actions/PlantUML/ImageView/Popupmenu");
-        if (!actionsForPath.isEmpty()) {
-            Action[] actions = actionsForPath.toArray(new Action[actionsForPath.size()]);
-            canvas.setComponentPopupMenu(Utilities.actionsToPopup(actions, Lookup.EMPTY));
-        }
-        add("Center", canvas);        
-    }          
-    
+        canvas.addMouseListener(new MouseAdapter() {
+            boolean isShiftClick = false;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                this.isShiftClick = e.isShiftDown();
+                if(e.getButton() == MouseEvent.BUTTON3 && isShiftClick) {
+                    return;
+                } else if(e.isPopupTrigger() && finalPopup != null) {
+                    finalPopup.show(canvas, e.getX(), e.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON3 && isShiftClick) {
+                    return;
+                } else if(e.isPopupTrigger() && finalPopup != null) {
+                    finalPopup.show(canvas, e.getX(), e.getY());
+                }
+            }
+        });
+
+        add("Center", canvas);
+    }
+
     public void renderSVGFileOnTabSwitch(@NonNull String imageContent) {
         canvas.addGVTTreeRendererListener(gvttrListener);
         renderSVGFile(imageContent);
