@@ -2,16 +2,56 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.netbeans.modules</groupId>
+    <groupId>eu.doppel-helix.netbeans.plugin.plantuml-nb</groupId>
     <artifactId>PlantUML-NB</artifactId>
     <version>1.10-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
     <name>PlantUML-NB</name>
 
+    <url>https://github.com/matthiasblaesing/plantuml-nb</url>
+    <description>Integration of PlantUML into NetBeans</description>
+
+    <licenses>
+        <license>
+            <name>GPL-3.0-only</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Matthias Bläsing</name>
+            <id>mb</id>
+            <email>mblaesing@doppel-helix.eu</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/matthiasblaesing/plantuml-nb.git</connection>
+        <developerConnection>scm:git:git@github.com:matthiasblaesing/plantuml-nb.git</developerConnection>
+        <url>https://github.com/matthiasblaesing/plantuml-nb</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss.sonatype.org</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.run.params.ide>  </netbeans.run.params.ide>
+        <netbeans.run.params.ide></netbeans.run.params.ide>
         <netbeans.platform.version>RELEASE90</netbeans.platform.version>
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
     </properties>
@@ -270,6 +310,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
@@ -278,18 +319,11 @@
                 <configuration>
                     <useDefaultManifestFile>true</useDefaultManifestFile>
                     <moduleType>normal</moduleType>
-                    <licenseName>MIT</licenseName>
+                    <licenseName>GPL-3.0-only</licenseName>
                     <licenseFile>license.txt</licenseFile>
                     <requiresRestart>true</requiresRestart>
                     <codeNameBase>org.netbeans.modules.plantumlnb/1</codeNameBase>
-                    <keystore>nbproject/private/keystore</keystore>
-                    <keystorealias>venkat</keystorealias>
-                    <keystorepassword>plantumlnb</keystorepassword>
-                    <author>Venkat Ram Akkineni</author>
-                    <publicPackages>
-                        <publicPackage>net.sourceforge.plantuml.swing</publicPackage>
-                        <publicPackage>org.netbeans.modules.plantumlnb.*</publicPackage>
-                    </publicPackages>
+                    <author>Venkat Ram Akkineni, Matthias Bläsing</author>
                 </configuration>
             </plugin>
 
@@ -314,11 +348,27 @@
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-    </build>    
+    </build>
 </project>
