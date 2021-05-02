@@ -3,41 +3,31 @@ OpenIDE-Module-Localizing-Bundle: org/netbeans/modules/plantumlnb/ui/Bundle.prop
 OpenIDE-Module-Layer: org/netbeans/modules/plantumlnb/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Short-Description: PlantUML functionality inside Netbeans.
-OpenIDE-Module-Long-Description: Create and edit UML files using 
+OpenIDE-Module-Long-Description: Create and edit UML files using
  PlantUML within the IDE. <br>
- <strong>Author:</strong> Venkat Ram Akkineni <br>
- <strong>Website:</strong> https://sourceforge.net/projects/plantumlnb/ <br><br>
+ <strong>Author:</strong> Venkat Ram Akkineni, Matthias Bläsing<br>
+ <strong>Website:</strong> https://github.com/matthiasblaesing/plantuml-nb <br><br>
  <strong>Help </strong> <br>
     <ul>
-        <li>Zoom ( Ctrl + Left Click ) </li> 
-        <li>Realize zoom ( Shift + Right Click  ) </li> 
-        <li>Pan ( SHIFT + Left Click ) </li> 
-        <li>Rotate ( CTRL + Right Click ) </li> 
-        <li>Reset ( CTRL + SHIFT + Right Click ) </li> 
+        <li>Zoom ( Ctrl + Left Click ) </li>
+        <li>Realize zoom ( Shift + Right Click  ) </li>
+        <li>Pan ( SHIFT + Left Click ) </li>
+        <li>Rotate ( CTRL + Right Click ) </li>
+        <li>Reset ( CTRL + SHIFT + Right Click ) </li>
     </ul>
-  <h3>Version 1.3</h3>   
-  <p><strong>What's new</strong></p>
+  <h3>Version 1.10</h3>
     <ul>
-        <li>Fixed mouse event handlers. You can now use mouse and keyboard combination to perform zoo / rotate / pan.</li>  
-        <li>Improved Lexer grammer.</li>
-        <li>Added a help hover button below to show the keyboard shortcuts.</li>
-        <li>Added code template support..</li>
-        <li>Showing document name on Preview panel titlebar.</li>
-        <li>Upgraded plantuml version to 7985.</li>
-        <li>Add support for PlantUML Dependency. Users can now create plantuml files from existing java files. Go to New File ></li>
+        <li>Bugfix: Image export creates defect files</li>
+        <li>Bugfix: Encoding handling is buggy and not integrated into the NetBeans infrastructure</li>
+        <li>Bugfix: Open in Browser does not work</li>
+        <li>Bugfix: Selecting text in preview window raises NoSuchMethodError</li>
+        <li>Bugfix: Invoking "PlantUML from existing java sources" raises exception</li>
+        <li>Bugfix: Scaling with right mouse click is not correctly ended</li>
+        <li>Bugfix: Prevent NullPointerException from preview window</li>
+        <li>Feature: Update bundled PlantUML (2021.3)</li>
+        <li>Feature: Remove need for project for creating PlantUML diagrams</li>
+        <li>Feature: Ensure project can be build on recent netbeans and JDK versions.</li>
+        <li>Feature: Remove lombok usage</li>
+        <li>Feature: Cleanup code generation from the javcc grammar</li>
     </ul>
-  
-  <p><strong>Known Issues</strong></p>
-    <ul>
-      <li>Scrollbar on the canvas is not working properly.
-      <ul>
-        <li><strong>WorkAround:</strong> Use pan in the mean time.</li>
-      </ul>
-    </ul>  
-  
-  <p><strong>NOTE</strong></p>
-    <ul>
-      <li>I have not researched into all possible code templates. If you, as a plantuml user, find code snippets that could be included inside the plugin, please share these with me via a sourceforge issue, so that everybody can benefit from your contribution.  </li>
-    </ul>
-    
-OpenIDE-Module-Specification-Version: 1.9
+OpenIDE-Module-Specification-Version: 1.10
