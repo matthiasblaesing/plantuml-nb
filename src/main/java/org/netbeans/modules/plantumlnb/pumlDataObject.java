@@ -202,6 +202,6 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
         this.currentAT = (AffineTransform) evt.getNewValue();
         double[] flatMatrix = new double[6];
         this.currentAT.getMatrix(flatMatrix);
-        LOG.log(Level.INFO, "Current Transform: " + Arrays.toString(flatMatrix));
+        LOG.log(Level.FINE, "Current Transform: " + Arrays.toString(flatMatrix));
     }
 }
