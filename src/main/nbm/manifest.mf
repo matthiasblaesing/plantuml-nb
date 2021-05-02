@@ -4,7 +4,7 @@ OpenIDE-Module-Layer: org/netbeans/modules/plantumlnb/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Short-Description: PlantUML functionality inside Netbeans.
 OpenIDE-Module-Long-Description: Create and edit UML files using 
- Plant UML within the IDE. <br>
+ PlantUML within the IDE. <br>
  <strong>Author:</strong> Venkat Ram Akkineni <br>
  <strong>Website:</strong> https://sourceforge.net/projects/plantumlnb/ <br><br>
  <strong>Help </strong> <br>

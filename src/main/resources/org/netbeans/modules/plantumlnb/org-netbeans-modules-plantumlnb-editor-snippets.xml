@@ -5,7 +5,7 @@
         <code><![CDATA[@startuml
     ${CURSOR}
 @enduml]]></code>
-        <description><![CDATA[Creates a new Plant UML construct.]]></description>
+        <description><![CDATA[Creates a new PlantUML construct.]]></description>
     </codetemplate>
 </codetemplates>
                     

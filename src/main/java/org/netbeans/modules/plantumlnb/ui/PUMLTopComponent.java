@@ -81,7 +81,7 @@ import org.openide.windows.WindowManager;
     preferredID = "PUMLTopComponent"
 )
 @Messages({
-    "CTL_PUMLAction=Plant UML",
+    "CTL_PUMLAction=PlantUML",
     "CTL_PUMLTopComponent=PlantUML",
     "HINT_PUMLTopComponent=This is a PlantUML window"
 })

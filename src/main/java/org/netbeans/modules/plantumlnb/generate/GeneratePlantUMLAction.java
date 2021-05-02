@@ -49,7 +49,7 @@ import org.openide.util.NbBundle.Messages;
 //@ActionReferences({
 //    @ActionReference(path = "Projects/package/Actions", position = 1400)
 //})
-@Messages("CTL_OnJavaPackageAction=Generate Plant UML")
+@Messages("CTL_OnJavaPackageAction=Generate PlantUML")
 public final class GeneratePlantUMLAction implements ActionListener {
     
     private final List<DataFolder> context;

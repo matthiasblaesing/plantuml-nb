@@ -47,7 +47,7 @@ public class PUMLLanguage extends DefaultLanguageConfig {
 
     @Override
     public String getDisplayName() {
-        return "Plant UML";
+        return "PlantUML";
     }
 
 }
