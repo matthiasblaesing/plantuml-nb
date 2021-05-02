@@ -108,12 +108,12 @@ public class SVGImagePreviewPanel extends JPanel {
         canvas.setEnableRotateInteractor(true);
         canvas.setEnableZoomInteractor(true);
         canvas.addMouseListener(new MouseAdapter() {
-            boolean isShiftClick = false;
+            boolean isModifierClick = false;
 
             @Override
             public void mousePressed(MouseEvent e) {
-                this.isShiftClick = e.isShiftDown();
-                if(e.getButton() == MouseEvent.BUTTON3 && isShiftClick) {
+                this.isModifierClick = e.isShiftDown() || e.isAltDown() || e.isAltGraphDown() || e.isControlDown() || e.isMetaDown();
+                if(isModifierClick) {
                     return;
                 } else if(e.isPopupTrigger() && finalPopup != null) {
                     finalPopup.show(canvas, e.getX(), e.getY());
@@ -122,7 +122,7 @@ public class SVGImagePreviewPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON3 && isShiftClick) {
+                if(isModifierClick) {
                     return;
                 } else if(e.isPopupTrigger() && finalPopup != null) {
                     finalPopup.show(canvas, e.getX(), e.getY());
