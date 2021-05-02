@@ -456,16 +456,16 @@ public final class PlantUMLVisualPanel1 extends JPanel {
             plantUMLWizardPanel1.fireChangeEvent();
             updateUI();
         }
-        
+
     }
-    
+
      /**
-     * Displays a {@link SourceGroup} in {@link #rootComboBox}.
+     * Displays a {@link SourceGroup} in {@link #sourceGroupsComboBox}.
      */
     private static final class SourceGroupListCellRenderer extends DefaultListCellRenderer/*<SourceGroup>*/ {
-        
+
         public SourceGroupListCellRenderer() {}
-        
+
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value != null && value instanceof SourceGroup) {
@@ -478,7 +478,7 @@ public final class PlantUMLVisualPanel1 extends JPanel {
             }
             return this;
         }
-        
+
     }
 
 }

@@ -137,21 +137,20 @@ public class SVGImagePreviewPanel extends JPanel {
         canvas.addGVTTreeRendererListener(gvttrListener);
         renderSVGFile(imageContent);
     }
-    
+
     /**
-     * 
-     * @param svgFile 
+     * @param imageContent
      */
-    public void renderSVGFile(@NonNull String imageContent) {    
+    public void renderSVGFile(@NonNull String imageContent) {
         if(!"".equals(imageContent)) {
-            currentImageContent = imageContent;            
+            currentImageContent = imageContent;
             canvas.setSize(getSize());
-            canvas.setSVGDocument(createSVGDocument(new StringReader(imageContent)));               
+            canvas.setSVGDocument(createSVGDocument(new StringReader(imageContent)));
         } else {
             logger.log(Level.INFO, "Svg image content is either null or empty, so, refraining for rendering the current plantuml image. ");
         }
     }
-    
+
     public SVGDocument createSVGDocument(StringReader sr) {
         String parser = XMLResourceDescriptor.getXMLParserClassName();
         SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);                     
@@ -204,18 +203,18 @@ public class SVGImagePreviewPanel extends JPanel {
     }
 
     /**
-     * Unbind the currentDataObject and bind the new one. This way everytime
-     * a tab switch happens, correct dataObject ( i.e. the dataObject of the plantuml
-     * currently displaying inside the Preview panel ) is listening to changes in the 
-     * AffineTransform.
-     * 
-     * @param currentDataObject 
+     * Unbind the currentDataObject and bind the new one. This way everytime a
+     * tab switch happens, correct dataObject ( i.e. the dataObject of the
+     * plantuml currently displaying inside the Preview panel ) is listening to
+     * changes in the AffineTransform.
+     *
+     * @param newDataObject
      */
     public void setCurrentDataObject(@NonNull pumlDataObject newDataObject) {
         canvas.removePropertyChangeListener(PUMLJSVGCanvas.renderingTransformPropertyName, this.currentDataObject);
         this.currentDataObject = newDataObject;
         canvas.addPropertyChangeListener(PUMLJSVGCanvas.renderingTransformPropertyName, this.currentDataObject);
-    }   
+    }
 
     public static SVGImagePreviewPanel getInstance() {
         if(null == instance) {
@@ -298,11 +297,11 @@ public class SVGImagePreviewPanel extends JPanel {
              }            
          }
      }
- 
-     /**
-      * A swing action to apply a zoom factor to the canvas.
-      * This can be used to zoom in (scale > 1) and out (scale <1).
-      */
+
+    /**
+     * A swing action to apply a zoom factor to the canvas. This can be used to
+     * zoom in (scale &gt; 1) and out (scale &lt; 1).
+     */
      public class ZoomAction extends AffineAction {
          public ZoomAction(double scale) {
              super(AffineTransform.getScaleInstance(scale, scale));

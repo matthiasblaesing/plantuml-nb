@@ -28,7 +28,7 @@ import org.apache.batik.swing.JSVGCanvas;
 
 /**
  *
- * @author Venkat Akkineni <sriguru@users.sourceforge.net>
+ * @author Venkat Akkineni &lt;sriguru@users.sourceforge.net&gt;
  */
 public class PUMLJSVGCanvas extends JSVGCanvas {
 
