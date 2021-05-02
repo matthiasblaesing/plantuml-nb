@@ -5,8 +5,6 @@ OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Short-Description: PlantUML functionality inside Netbeans.
 OpenIDE-Module-Long-Description: Create and edit UML files using
  PlantUML within the IDE. <br>
- <strong>Author:</strong> Venkat Ram Akkineni, Matthias Bläsing<br>
- <strong>Website:</strong> https://github.com/matthiasblaesing/plantuml-nb <br><br>
  <strong>Help </strong> <br>
     <ul>
         <li>Zoom ( Ctrl + Left Click ) </li>
