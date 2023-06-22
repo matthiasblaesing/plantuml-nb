@@ -42,8 +42,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -51,18 +54,23 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
+import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
 import org.apache.batik.swing.gvt.GVTTreeRendererListener;
+import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.netbeans.api.annotations.common.NonNull;
 import org.netbeans.modules.plantumlnb.ui.PUMLJSVGCanvas;
 import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.Utilities;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.util.Arrays.asList;
 
 /**
  *
@@ -145,9 +153,37 @@ public class SVGImagePreviewPanel extends JPanel {
         if(!"".equals(imageContent)) {
             currentImageContent = imageContent;
             canvas.setSize(getSize());
-            canvas.setSVGDocument(createSVGDocument(new StringReader(imageContent)));
+            SVGDocument doc = createSVGDocument(new StringReader(imageContent));
+            makeBatikCompatible(doc);
+            canvas.setSVGDocument(doc);
         } else {
             logger.log(Level.INFO, "Svg image content is either null or empty, so, refraining for rendering the current plantuml image. ");
+        }
+    }
+
+    private static final Set<String> SUPPORTED_TEXT_DECORATION = Collections.
+            unmodifiableSet(new HashSet<>(asList(
+                    CSSConstants.CSS_BLINK_VALUE, CSSConstants.CSS_LINE_THROUGH_VALUE,
+                    CSSConstants.CSS_UNDERLINE_VALUE, CSSConstants.CSS_OVERLINE_VALUE
+            )));
+    private void makeBatikCompatible(SVGDocument input) {
+        // Batik does not support text-decoration "wavy underline", which is
+        // generated in the case of an error. This reduces the attribute to the
+        // supported set
+        NodeList textElements = input.getElementsByTagName("text");
+        for(int i = 0; i < textElements.getLength(); i++) {
+            Element textElement = (Element) textElements.item(i);
+            String value = textElement.getAttribute("text-decoration");
+            if (!value.isEmpty()) {
+                StringBuilder newValue = new StringBuilder();
+                for(String s: value.split("\\s+")) {
+                    if(SUPPORTED_TEXT_DECORATION.contains(s.toLowerCase())) {
+                        newValue.append(s);
+                        newValue.append(" ");
+                    }
+                }
+                textElement.setAttribute("text-decoration", newValue.toString());
+            }
         }
     }
 
