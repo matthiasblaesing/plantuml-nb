@@ -173,19 +173,19 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-swing</artifactId>
-            <version>1.14</version>
+            <version>1.16</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-script</artifactId>
-            <version>1.14</version>
+            <version>1.16</version>
             <!-- exclude xerces as Netbeans includes it -->
             <exclusions>
                 <exclusion>
@@ -198,7 +198,7 @@
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
-            <version>2.12.0</version>
+            <version>2.12.2</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
@@ -274,7 +274,7 @@
         <dependency>
             <groupId>net.sourceforge.plantuml</groupId>
             <artifactId>plantuml</artifactId>
-            <version>1.2021.3</version>
+            <version>1.2023.9</version>
         </dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
@@ -299,7 +299,7 @@
             <plugin>
                 <groupId>com.helger.maven</groupId>
                 <artifactId>ph-javacc-maven-plugin</artifactId>
-                <version>4.1.4</version>
+                <version>4.1.5</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -313,7 +313,7 @@
             <plugin>
                 <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <version>4.6</version>
+                <version>4.8</version>
                 <extensions>true</extensions>
                 <configuration>
                     <useDefaultManifestFile>true</useDefaultManifestFile>
@@ -329,10 +329,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>11</release>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
@@ -340,7 +339,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -351,13 +350,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.1.0</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -367,6 +366,12 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.1</version>
             </plugin>
         </plugins>
     </build>
