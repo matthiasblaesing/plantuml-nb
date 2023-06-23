@@ -4,28 +4,19 @@ OpenIDE-Module-Layer: org/netbeans/modules/plantumlnb/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Short-Description: PlantUML functionality inside Netbeans.
 OpenIDE-Module-Long-Description: Create and edit UML files using
- PlantUML within the IDE. <br>
+ PlantUML within the IDE. <br><br>
  <strong>Help </strong> <br>
     <ul>
-        <li>Zoom ( Ctrl + Left Click ) </li>
-        <li>Realize zoom ( Shift + Right Click  ) </li>
-        <li>Pan ( SHIFT + Left Click ) </li>
-        <li>Rotate ( CTRL + Right Click ) </li>
-        <li>Reset ( CTRL + SHIFT + Right Click ) </li>
+      <li>Zoom ( Ctrl + Left Click ) </li>
+      <li>Realize zoom ( Shift + Right Click  ) </li>
+      <li>Pan ( SHIFT + Left Click ) </li>
+      <li>Rotate ( CTRL + Right Click ) </li>
+      <li>Reset ( CTRL + SHIFT + Right Click ) </li>
     </ul>
-  <h3>Version 1.10</h3>
-    <ul>
-        <li>Bugfix: Image export creates defect files</li>
-        <li>Bugfix: Encoding handling is buggy and not integrated into the NetBeans infrastructure</li>
-        <li>Bugfix: Open in Browser does not work</li>
-        <li>Bugfix: Selecting text in preview window raises NoSuchMethodError</li>
-        <li>Bugfix: Invoking "PlantUML from existing java sources" raises exception</li>
-        <li>Bugfix: Scaling with right mouse click is not correctly ended</li>
-        <li>Bugfix: Prevent NullPointerException from preview window</li>
-        <li>Feature: Update bundled PlantUML (2021.3)</li>
-        <li>Feature: Remove need for project for creating PlantUML diagrams</li>
-        <li>Feature: Ensure project can be build on recent netbeans and JDK versions.</li>
-        <li>Feature: Remove lombok usage</li>
-        <li>Feature: Cleanup code generation from the javcc grammar</li>
-    </ul>
-OpenIDE-Module-Specification-Version: 1.11
+  <h3>Version 1.12</h3>
+  <ul>
+    <li>Feature: Update to latest version of PlantUML (1.2023.9)</li>
+    <li>Bugfix: Update Batik dependency to remove Xalan</li>
+    <li>Bugfix: Ensure SVG generated on syntax error can be rendered without a message dialog opening</li>
+    <li>Bugfix: Remove unnecessary ant dependency</li>
+  </ul>

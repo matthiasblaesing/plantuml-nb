@@ -2,6 +2,16 @@
 
 Netbeans plugin that wraps PlantUML to provide its functionality from within Netbeans.
 
+### Version 1.12
+
+    * Feature: Update to latest version of PlantUML (1.2023.9)
+    * Bugfix:  Update Batik dependency to remove Xalan
+    * Bugfix:  Ensure SVG generated on syntax error can be rendered without
+               a message dialog opening
+    * Bugfix:  Remove unnecessary ant dependency
+
+### Version 1.11
+
 ### Version 1.10
 
     * Bugfix: Image export creates defect files
