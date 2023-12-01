@@ -2,6 +2,12 @@
 
 Netbeans plugin that wraps PlantUML to provide its functionality from within Netbeans.
 
+### Version 1.13
+
+    * Feature: Update to latest version of batik (1.17)
+    * Feature: Update to latest version of PlantUML (1.2023.12)
+    * Bugfix:  Add missing dependency on ant (prevented diagram generation to work)
+
 ### Version 1.12
 
     * Feature: Update to latest version of PlantUML (1.2023.9)
