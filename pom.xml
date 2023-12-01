@@ -3,7 +3,7 @@
 
     <groupId>eu.doppel-helix.netbeans.plugin.plantuml-nb</groupId>
     <artifactId>PlantUML-NB</artifactId>
-    <version>1.13</version>
+    <version>1.14-SNAPSHOT</version>
     <packaging>nbm</packaging>
 
     <name>PlantUML-NB</name>
