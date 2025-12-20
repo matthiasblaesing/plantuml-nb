@@ -28,6 +28,12 @@
         description = "NewTemplateDescription.html",
         requireProject = false
 )
+@Messages({
+    "OpenIDE-Module-Name=PlantUML",
+    "OpenIDE-Module-Display-Category=UML",
+    "OpenIDE-Module-Short-Description=Supports PlantUML files."
+})
 package org.netbeans.modules.plantumlnb;
 
 import org.netbeans.api.templates.TemplateRegistration;
+import org.openide.util.NbBundle.Messages;

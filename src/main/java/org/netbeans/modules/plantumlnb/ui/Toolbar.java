@@ -33,11 +33,15 @@ import org.netbeans.modules.plantumlnb.SVGImagePreviewPanel;
 import org.netbeans.modules.plantumlnb.ui.actions.ExportAction;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
+import org.openide.util.NbBundle.Messages;
 
 /**
  *
  * @author venkat
  */
+@Messages({
+    "ACSN_Toolbar=Zoom Toolbar",
+})
 public class Toolbar {
 
     private DataObjectAccess dataObjectAccess;

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Localizing-Bundle: org/netbeans/modules/plantumlnb/ui/Bundle.properties
+OpenIDE-Module-Localizing-Bundle: org/netbeans/modules/plantumlnb/Bundle.properties
 OpenIDE-Module-Layer: org/netbeans/modules/plantumlnb/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Short-Description: PlantUML functionality inside Netbeans.
