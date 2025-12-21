@@ -118,26 +118,6 @@ public final class pumlVisualElement extends MultiViewEditorElement {
         return super.getUndoRedo();
     }
 
-    public static pumlDataObject getActivePUMLEditorDataObject(){
-        
-        WindowManager defaultWM = WindowManager.getDefault();
-        TopComponent[] openedTCs = defaultWM.getOpenedTopComponents(defaultWM.findMode("editor"));
-        
-        TopComponent showingTC = null;
-        for(int i = 0; i < openedTCs.length; i++ ) {
-            if(openedTCs[i].isShowing()) {
-                showingTC = openedTCs[i];
-                break;
-            }
-        }
-        
-        if(showingTC == null) return null;
-        
-        pumlDataObject dataObject = showingTC.getLookup().lookup(pumlDataObject.class);
-        
-        return dataObject == null ? null : (pumlDataObject) dataObject;
-    }
-    
     /**
      * TODO: Implement this method.
      * 

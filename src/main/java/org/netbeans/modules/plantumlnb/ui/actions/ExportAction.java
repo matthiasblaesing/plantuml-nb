@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -44,7 +44,6 @@ import org.netbeans.modules.plantumlnb.ui.filefilter.EPSFileFilter;
 import org.netbeans.modules.plantumlnb.ui.filefilter.PNGFileFilter;
 import org.netbeans.modules.plantumlnb.ui.filefilter.SVGFileFilter;
 import org.netbeans.modules.plantumlnb.ui.io.PUMLGenerator;
-import org.netbeans.modules.plantumlnb.ui.pumlVisualElement;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -54,7 +53,9 @@ import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
+import org.openide.util.Utilities;
 
 /**
  *
@@ -75,20 +76,12 @@ import org.openide.util.NbBundle;
 @NbBundle.Messages("CTL_ExportAction=Export as image...")
 public class ExportAction implements ActionListener {
 
-    private PUMLGenerator pumlGenerator = PUMLGenerator.getInstance();
-    
     private static final Logger LOG = Logger.getLogger(ExportAction.class.getName());
     private static final Collection<AbstractImageFileFilter> availableFilters = Arrays.asList(new SVGFileFilter(), new PNGFileFilter(), new EPSFileFilter());
 
-    private final pumlDataObject context;
-
-    public ExportAction() {
-        this.context = null;
-    }
-    
     @Override
     public void actionPerformed(ActionEvent e) {
-        final pumlDataObject dataObject = pumlVisualElement.getActivePUMLEditorDataObject();
+        final pumlDataObject dataObject = Utilities.actionsGlobalContext().lookup(pumlDataObject.class);
         if (null == dataObject) {
             return;
         }
@@ -136,7 +129,7 @@ public class ExportAction implements ActionListener {
 
                         });
 
-                    } catch (Throwable ex) {
+                    } catch (IOException | RuntimeException ex) {
                         Exceptions.printStackTrace(ex);
                         String failNotificationText = "File " + sourceFile.getAbsolutePath() + " saved failed. ";
                         StatusDisplayer.getDefault().setStatusText(failNotificationText);

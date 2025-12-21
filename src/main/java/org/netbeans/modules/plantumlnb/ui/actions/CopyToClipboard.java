@@ -39,13 +39,13 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.swing.ImageSelection;
 import org.netbeans.modules.plantumlnb.pumlDataObject;
-import org.netbeans.modules.plantumlnb.ui.pumlVisualElement;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.Utilities;
 
 /**
  *
@@ -69,7 +69,7 @@ public final class CopyToClipboard implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-        pumlDataObject dataObject = pumlVisualElement.getActivePUMLEditorDataObject();
+        pumlDataObject dataObject = Utilities.actionsGlobalContext().lookup(pumlDataObject.class);
         if (dataObject != null) {
 
             ByteArrayOutputStream os = null;

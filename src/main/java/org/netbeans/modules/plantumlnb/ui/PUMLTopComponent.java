@@ -254,8 +254,17 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
         if (dataObject == null) {
             return;
         }
+        if (currentDataObject == dataObject) {
+            return;
+        }
 
         currentDataObject = dataObject;
+
+        DataObject dobj = getLookup().lookup(DataObject.class);
+        if (dobj != null) {
+            this.instanceContent.remove(dobj);
+        }
+        this.instanceContent.add(dataObject);
 
         WORKER.post(new Runnable() {
             @Override
