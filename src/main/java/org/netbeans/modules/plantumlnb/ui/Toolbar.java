@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
-import org.netbeans.modules.plantumlnb.DataObjectAccess;
 import org.netbeans.modules.plantumlnb.SVGImagePreviewPanel;
 import org.netbeans.modules.plantumlnb.ui.actions.ExportAction;
 import org.openide.util.ImageUtilities;
@@ -44,7 +43,6 @@ import org.openide.util.NbBundle.Messages;
 })
 public class Toolbar {
 
-    private DataObjectAccess dataObjectAccess;
     private AffineTransform currentAt = null;
     private PUMLJSVGCanvas canvas = null;
     private SVGImagePreviewPanel svgImagePreviewPanel = null;
@@ -71,11 +69,6 @@ public class Toolbar {
         toolBar.add(getQuickHelpLabel());
 
         return toolBar;
-    }
-
-    public JToolBar createToolBar(DataObjectAccess doa) {
-        this.dataObjectAccess = doa;
-        return createToolBar();
     }
 
     public JLabel getQuickHelpLabel() {
@@ -175,14 +168,6 @@ public class Toolbar {
         }
 
         return instance;
-    }
-
-    public DataObjectAccess getDataObjectAccess() {
-        return dataObjectAccess;
-    }
-
-    public void setDataObjectAccess(DataObjectAccess dataObjectAccess) {
-        this.dataObjectAccess = dataObjectAccess;
     }
 
     public AffineTransform getCurrentAt() {
