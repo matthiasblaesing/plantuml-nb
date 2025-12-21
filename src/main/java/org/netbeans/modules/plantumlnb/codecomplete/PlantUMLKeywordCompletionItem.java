@@ -44,12 +44,12 @@ import org.openide.util.ImageUtilities;
  */
 public class PlantUMLKeywordCompletionItem implements CompletionItem {
     
-    private String text;
-    private static ImageIcon fieldIcon =
+    private static final ImageIcon fieldIcon =
             new ImageIcon(ImageUtilities.loadImage("/org/netbeans/modules/plantumlnb/icon.png"));
-    private static Color fieldColor = Color.decode("0x0000B2");
-    private int caretOffset;
-    private int dotOffset;
+    private static final Color fieldColor = Color.decode("0x0000B2");
+    private final String text;
+    private final int caretOffset;
+    private final int dotOffset;
 
     PlantUMLKeywordCompletionItem(String keyword, int dotOffset, int caretOffset) {
         this.text = keyword;

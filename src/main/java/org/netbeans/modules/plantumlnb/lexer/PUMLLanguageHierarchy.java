@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -126,14 +126,14 @@ public class PUMLLanguageHierarchy extends LanguageHierarchy<PUMLTokenId> {
             new PUMLTokenId("REVERSE_CALL_MESSAGE", "operator" , PUMLParserConstants.REVERSE_CALL_MESSAGE),
             new PUMLTokenId("REVERSE_CALL_DOTTED_MESSAGE", "operator" , PUMLParserConstants.REVERSE_CALL_DOTTED_MESSAGE),
             new PUMLTokenId("FORWARD_ASYNCHRONOUS_CALL_MESSAGE", "operator" , PUMLParserConstants.FORWARD_ASYNCHRONOUS_CALL_MESSAGE),
-            new PUMLTokenId("REVERSE_ASYNCHRONOUS_CALL_MESSAGE", "operator" , PUMLParserConstants.REVERSE_ASYNCHRONOUS_CALL_MESSAGE),                   
-            new PUMLTokenId("DOTS_DASHES", "operator", PUMLParserConstants.DOTS_DASHES),            
-            new PUMLTokenId("LEFT_AGGREGATION", "operator", PUMLParserConstants.LEFT_AGGREGATION),                      
-            new PUMLTokenId("LEFT_EXTENSION", "operator", PUMLParserConstants.LEFT_EXTENSION),                        
-            new PUMLTokenId("LEFT_COMPOSITION", "operator", PUMLParserConstants.LEFT_COMPOSITION),                        
-            new PUMLTokenId("RIGHT_AGGREGATION", "operator", PUMLParserConstants.RIGHT_AGGREGATION),                        
-            new PUMLTokenId("RIGHT_EXTENSION", "operator", PUMLParserConstants.RIGHT_EXTENSION),                        
-            new PUMLTokenId("RIGHT_COMPOSITION", "operator", PUMLParserConstants.RIGHT_COMPOSITION),            
+            new PUMLTokenId("REVERSE_ASYNCHRONOUS_CALL_MESSAGE", "operator" , PUMLParserConstants.REVERSE_ASYNCHRONOUS_CALL_MESSAGE),
+            new PUMLTokenId("DOTS_DASHES", "operator", PUMLParserConstants.DOTS_DASHES),
+            new PUMLTokenId("LEFT_AGGREGATION", "operator", PUMLParserConstants.LEFT_AGGREGATION),
+            new PUMLTokenId("LEFT_EXTENSION", "operator", PUMLParserConstants.LEFT_EXTENSION),
+            new PUMLTokenId("LEFT_COMPOSITION", "operator", PUMLParserConstants.LEFT_COMPOSITION),
+            new PUMLTokenId("RIGHT_AGGREGATION", "operator", PUMLParserConstants.RIGHT_AGGREGATION),
+            new PUMLTokenId("RIGHT_EXTENSION", "operator", PUMLParserConstants.RIGHT_EXTENSION),
+            new PUMLTokenId("RIGHT_COMPOSITION", "operator", PUMLParserConstants.RIGHT_COMPOSITION),
 
             new PUMLTokenId("ACTOR", "type" , PUMLParserConstants.ACTOR),
             new PUMLTokenId("PARTICIPANT", "type" , PUMLParserConstants.PARTICIPANT),
@@ -146,29 +146,29 @@ public class PUMLLanguageHierarchy extends LanguageHierarchy<PUMLTokenId> {
             new PUMLTokenId("COMPONENT", "type" , PUMLParserConstants.COMPONENT),
             new PUMLTokenId("STATE", "type" , PUMLParserConstants.STATE),
             new PUMLTokenId("OBJECT", "type" , PUMLParserConstants.OBJECT),
-            
-            new PUMLTokenId("ARTIFACT", "part" , PUMLParserConstants.ARTIFACT),            
-            new PUMLTokenId("FOLDER", "part" , PUMLParserConstants.FOLDER),            
-            new PUMLTokenId("RECT", "part" , PUMLParserConstants.RECT),            
-            new PUMLTokenId("NODE", "part" , PUMLParserConstants.NODE),            
-            new PUMLTokenId("FRAME", "part" , PUMLParserConstants.FRAME),            
-            new PUMLTokenId("CLOUD", "part" , PUMLParserConstants.CLOUD),            
-            new PUMLTokenId("DATABASE", "part" , PUMLParserConstants.DATABASE),            
-            new PUMLTokenId("STORAGE", "part" , PUMLParserConstants.STORAGE),            
-            new PUMLTokenId("AGENT", "part" , PUMLParserConstants.AGENT),            
-            new PUMLTokenId("BOUNDARY", "part" , PUMLParserConstants.BOUNDARY),            
-            new PUMLTokenId("CONTROL", "part" , PUMLParserConstants.CONTROL),            
-            new PUMLTokenId("ENTITY", "part" , PUMLParserConstants.ENTITY),          
-            
-            new PUMLTokenId("IDENTIFIER", "identifier" , PUMLParserConstants.IDENTIFIER),            
-            
+
+            new PUMLTokenId("ARTIFACT", "part" , PUMLParserConstants.ARTIFACT),
+            new PUMLTokenId("FOLDER", "part" , PUMLParserConstants.FOLDER),
+            new PUMLTokenId("RECT", "part" , PUMLParserConstants.RECT),
+            new PUMLTokenId("NODE", "part" , PUMLParserConstants.NODE),
+            new PUMLTokenId("FRAME", "part" , PUMLParserConstants.FRAME),
+            new PUMLTokenId("CLOUD", "part" , PUMLParserConstants.CLOUD),
+            new PUMLTokenId("DATABASE", "part" , PUMLParserConstants.DATABASE),
+            new PUMLTokenId("STORAGE", "part" , PUMLParserConstants.STORAGE),
+            new PUMLTokenId("AGENT", "part" , PUMLParserConstants.AGENT),
+            new PUMLTokenId("BOUNDARY", "part" , PUMLParserConstants.BOUNDARY),
+            new PUMLTokenId("CONTROL", "part" , PUMLParserConstants.CONTROL),
+            new PUMLTokenId("ENTITY", "part" , PUMLParserConstants.ENTITY),
+
+            new PUMLTokenId("IDENTIFIER", "identifier" , PUMLParserConstants.IDENTIFIER),
+
             new PUMLTokenId("LETTER", "literal" , PUMLParserConstants.LETTER),
             new PUMLTokenId("PART_LETTER", "literal" , PUMLParserConstants.PART_LETTER),
-                      
+
 
 
         });
-        idToToken = new HashMap<Integer, PUMLTokenId>();
+        idToToken = new HashMap<>();
         for (PUMLTokenId token : tokens) {
             idToToken.put(token.ordinal(), token);
         }

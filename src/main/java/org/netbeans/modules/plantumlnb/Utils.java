@@ -32,7 +32,7 @@ public class Utils {
     }
 
     public static boolean isAntStylePathPattern(final String path) {
-        return (path.indexOf("*") != -1 || path.indexOf("?") != -1);
+        return (path.contains("*") || path.contains("?"));
     }
 
     public static boolean isRegexPattern(final String regexArg) {

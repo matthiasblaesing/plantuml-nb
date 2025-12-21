@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -33,5 +33,4 @@ public class PUMLTemplate {
         return "SimpleString " + '-' + 1.2;
     }// line comment
 
-    
 }

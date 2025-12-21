@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -42,11 +42,11 @@ public final class PlantUMLVisualPanel5 extends JPanel implements GenericDocumen
     public PlantUMLVisualPanel5() {
         initComponents();
     }
-    
+
     @Override
     public void init(PlantUMLWizardPanel5 plantUMLWizardPanel5) {
         this.plantUMLWizardPanel5 = plantUMLWizardPanel5;
-        
+
         displayNameTextExpressionArea.getDocument().addDocumentListener(this);
     }
 
@@ -116,7 +116,7 @@ public final class PlantUMLVisualPanel5 extends JPanel implements GenericDocumen
 
     @Override
     public void updateUI(DocumentEvent e) {
-        
+
     }
 
     @Override

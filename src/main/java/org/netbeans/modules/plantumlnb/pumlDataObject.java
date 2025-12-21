@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -128,7 +128,7 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     private AffineTransform currentAT;
 
     public pumlDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
-        super(pf, loader);        
+        super(pf, loader);
         pf.addFileChangeListener(this);
         registerEditor("text/x-puml", true);
 
@@ -182,7 +182,7 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     /**
      * https://blogs.oracle.com/geertjan/entry/adding_a_history_tab_to
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     public Pane call() throws Exception {
@@ -202,6 +202,6 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
         this.currentAT = (AffineTransform) evt.getNewValue();
         double[] flatMatrix = new double[6];
         this.currentAT.getMatrix(flatMatrix);
-        LOG.log(Level.FINE, "Current Transform: " + Arrays.toString(flatMatrix));
+        LOG.log(Level.FINE, () -> "Current Transform: " + Arrays.toString(flatMatrix));
     }
 }

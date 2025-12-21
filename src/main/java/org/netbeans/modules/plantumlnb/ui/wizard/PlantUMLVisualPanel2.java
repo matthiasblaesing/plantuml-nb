@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -159,7 +159,7 @@ public final class PlantUMLVisualPanel2 extends JPanel implements GenericDocumen
     public String getIncludePattern() {
         return includePatternTextField.getText();
     }
-    
+
     public String getExcludePattern() {
         return excludePatternTextField.getText();
     }
@@ -183,5 +183,5 @@ public final class PlantUMLVisualPanel2 extends JPanel implements GenericDocumen
     public List<ChangeListener> getChangeListeners() {
         return listeners;
     }
-    
+
 }

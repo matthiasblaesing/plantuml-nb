@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -37,5 +37,5 @@ public enum DisplayTypeOptions {
     imports,
     interfaces,
     native_methods,
-    static_imports, 
+    static_imports,
 }

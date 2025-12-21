@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -42,56 +42,36 @@ import org.openide.util.NbBundle.Messages;
  *
  * @author Venkat Ram Akkineni
  */
-//@ActionID(
-//        category = "Build",
-//        id = "org.netbeans.modules.plantumlnb.GeneratePlantUMLAction")
-//@ActionRegistration( displayName = "#CTL_OnJavaPackageAction")
-//@ActionReferences({
-//    @ActionReference(path = "Projects/package/Actions", position = 1400)
-//})
 @Messages("CTL_OnJavaPackageAction=Generate PlantUML")
 public final class GeneratePlantUMLAction implements ActionListener {
-    
+
     private final List<DataFolder> context;
     private static final Logger LOG = Logger.getLogger(GeneratePlantUMLAction.class.getName());
- 
+
     public GeneratePlantUMLAction(List<DataFolder> context) {
         this.context = context;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        ArrayList<File> javaFiles = new ArrayList<>();
-        
+
         for(ListIterator contextIter = context.listIterator(); contextIter.hasNext();){
             DataFolder dataFolder = (DataFolder) contextIter.next();
 
             File dir = FileUtil.toFile(dataFolder.getPrimaryFile());
-            
-//            File[] javaFiles = dir.listFiles(new FilenameFilter() { 
-//                
-//    	        @Override 
-//                public boolean accept(File dir, String filename) { 
-//                     return filename.endsWith(".java"); 
-//                 }
-//            });
-//            
-//            
-//            
-            javaFiles.addAll(list(dir));
+
             try {
                 PlantUMLDependencyService.generate(dir, new File("/tmp/" + dir.getName() + ".puml"));
             } catch(MalformedURLException | CommandLineException | ParseException ex) {
                 LOG.log(Level.INFO, ex.getLocalizedMessage());
             }
-        }   
+        }
         LOG.log(Level.INFO, "Acting already ...");
     }
-    
+
     public ArrayList<File> list(File file) {
         File[] children = file.listFiles();
-        ArrayList<File> javaFiles = new ArrayList<>();        
+        ArrayList<File> javaFiles = new ArrayList<>();
         /**
          * If children is not null then 'file' is a directory, recurse.
          */
@@ -101,10 +81,10 @@ public final class GeneratePlantUMLAction implements ActionListener {
             }
         } else {
             if(file.getName().endsWith(".java")) {
-                javaFiles.add(file);                
+                javaFiles.add(file);
             }
         }
         return javaFiles;
     }
-    
+
 }

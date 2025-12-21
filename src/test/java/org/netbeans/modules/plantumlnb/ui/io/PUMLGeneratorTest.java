@@ -1,10 +1,5 @@
 package org.netbeans.modules.plantumlnb.ui.io;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import net.sourceforge.plantuml.FileFormat;
@@ -23,20 +18,20 @@ import org.openide.util.Exceptions;
  * @author venkat
  */
 public class PUMLGeneratorTest {
-    
+
     String sequenceUML;
-    
+
     public PUMLGeneratorTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         sequenceUML =   "@startuml" +
@@ -51,12 +46,12 @@ public class PUMLGeneratorTest {
                             "Foo1 -> Foo5 : To database" +
                         "@enduml";
     }
-    
+
     @After
     public void tearDown() {
     }
-    
-    
+
+
     @Test
     public void smokeTestSVGGeneration() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -68,7 +63,7 @@ public class PUMLGeneratorTest {
             Exceptions.printStackTrace(ex);
         }
     }
-    
+
     @Test
     public void smokeTestPNGGeneration() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -80,7 +75,7 @@ public class PUMLGeneratorTest {
             Exceptions.printStackTrace(ex);
         }
     }
-    
+
     @Test
     public void smokeTestEPSGeneration() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();

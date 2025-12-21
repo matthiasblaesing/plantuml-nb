@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -96,7 +96,7 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
      */
     private static final Lookup.Template MY_DATA = new Lookup.Template(pumlDataObject.class);
 
-    private InstanceContent instanceContent = new InstanceContent();
+    private final InstanceContent instanceContent = new InstanceContent();
 
     /**
      * current context to work on
@@ -158,7 +158,7 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private  void addCustomComponents(){        
+    private  void addCustomComponents(){
         panelUI = SVGImagePreviewPanel.getInstance();
         scrollPane = new javax.swing.JScrollPane();
 
@@ -193,7 +193,7 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
                 )
         );
     }// </editor-fold>
-    
+
     private void addToolbar() {
         Toolbar.instance().setSvgImagePreviewPanel(panelUI);
         jToolBar1 = Toolbar.instance().createToolBar();
@@ -212,11 +212,11 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
 
         setNewContent(currentDataObject);
     }
-       
+
     @Override
     public void componentClosed() {
     }
-    
+
     @Override
     public void componentActivated(){
         // lookup context and listen to result to get notified about context changes
@@ -314,26 +314,12 @@ public final class PUMLTopComponent extends TopComponent implements Serializable
         }
         return contextListener;
     }
-    
-//    @Override
-//    public static Action openAction(TopComponent component, String displayName, String iconBase, boolean noIconInMenu) {
-//                
-//        if(pumltc == null) {
-//            PUMLTopComponent.pumltc = new PUMLTopComponent();
-//        }
-//        
-//        if(!pumltc.isShowing()) {
-//            pumltc.open();
-//        }
-//        
-//        return pumltc;
-//    }
 
     @Override
     public ExplorerManager getExplorerManager() {
         return em;
     }
-    
+
     /**
      * Listens to changes of context and triggers proper action
      */

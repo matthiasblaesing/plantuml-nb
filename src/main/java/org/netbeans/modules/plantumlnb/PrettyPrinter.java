@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -37,7 +37,7 @@ import javax.xml.transform.stream.StreamSource;
  * @author venkat
  */
 public class PrettyPrinter {
-    
+
     public static byte[] formatXml(byte[] xml) {
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream(xml.length)) {
             Transformer serializer = SAXTransformerFactory.newInstance().newTransformer();
@@ -51,5 +51,5 @@ public class PrettyPrinter {
             return xml;
         }
     }
-    
+
 }

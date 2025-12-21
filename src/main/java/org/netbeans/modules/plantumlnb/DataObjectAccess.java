@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -30,7 +30,7 @@ import org.openide.loaders.DataObject;
  * @author venkat
  */
 public interface DataObjectAccess {
-    
+
     public DataObject getDataObject();
-    
+
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -29,7 +29,6 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import org.netbeans.core.spi.multiview.text.MultiViewEditorElement;
 import org.netbeans.modules.plantumlnb.pumlDataObject;
-import org.openide.awt.UndoRedo;
 import org.openide.util.Lookup;
 import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
@@ -39,29 +38,27 @@ import org.openide.windows.WindowManager;
 /**
  * https://blogs.oracle.com/geertjan/entry/multiview_of_the_next_release
  * @author venkat
- * 
+ *
  * NOTE: We don't need VisualElement Registration here. MultiViewEditorElement displays two views already.
  */
 
 public final class pumlVisualElement extends MultiViewEditorElement {
-    
+
     private static final long serialVersionUID = -6918553698868162650L;
-    
+
     public static pumlVisualElement currentlyActivePUMLVisualElement = null;
 
     private pumlDataObject obj;
-    private JToolBar toolbar = new JToolBar();
-//    private transient MultiViewElementCallback callback;
-    private TopComponent.Registry topComponentRegistry = TopComponent.getRegistry();
+    private final JToolBar toolbar = new JToolBar();
 
     public pumlVisualElement(Lookup lkp) {
-        super(lkp);             
+        super(lkp);
     }
-    
+
 
     @Override
     public void componentActivated() {
-        super.componentActivated(); 
+        super.componentActivated();
         PUMLTopComponent pumltc = PUMLTopComponent.getInstance();
         this.obj = getLookup().lookup(pumlDataObject.class);
         if(pumltc != null) {
@@ -75,8 +72,8 @@ public final class pumlVisualElement extends MultiViewEditorElement {
      */
     @Override
     public void componentOpened() {
-        super.componentOpened(); 
-        
+        super.componentOpened();
+
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run() {
@@ -92,52 +89,42 @@ public final class pumlVisualElement extends MultiViewEditorElement {
 
     }
 
-        
+
     public PUMLTopComponent retrievePUMLTopComponent() {
-        Iterator i = topComponentRegistry.getOpened().iterator();
-        
+        Iterator i = TopComponent.getRegistry().getOpened().iterator();
+
         PUMLTopComponent pumltc = null;
         while(i.hasNext()){
             TopComponent tc = (TopComponent) i.next();
-            if(tc instanceof PUMLTopComponent) {
-                pumltc = (PUMLTopComponent) tc;
+            if(tc instanceof PUMLTopComponent pUMLTopComponent) {
+                pumltc = pUMLTopComponent;
                 break;
-            }                
+            }
         }
-        
+
         return pumltc;
-    }
-    
-    @Override
-    public void componentDeactivated() {
-        super.componentDeactivated();
-    }
-    
-    @Override
-    public UndoRedo getUndoRedo() {
-        return super.getUndoRedo();
     }
 
     /**
      * TODO: Implement this method.
-     * 
+     *
      * http://stackoverflow.com/questions/16765304/topcomponent-not-serializable
      * @param out
-     * @throws IOException 
+     * @throws IOException
      */
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        
+
     }
 
     /**
      * TODO: Implement this method. Refer to the link in writeObject comment.
-     * 
+     *
      * @param in
      * @throws IOException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        
+
     }
 
 }

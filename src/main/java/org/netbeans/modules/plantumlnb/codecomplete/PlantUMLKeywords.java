@@ -26,12 +26,8 @@ package org.netbeans.modules.plantumlnb.codecomplete;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.StyledDocument;
 import org.netbeans.spi.editor.completion.CompletionResultSet;
-import org.openide.util.Exceptions;
 
 /**
  *

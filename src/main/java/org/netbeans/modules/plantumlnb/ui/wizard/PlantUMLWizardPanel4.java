@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -67,7 +67,7 @@ public class PlantUMLWizardPanel4 implements WizardDescriptor.Panel<WizardDescri
 
     /**
      * If it is always OK to press Next or Finish, then:
-     * @return 
+     * @return
      */
     @Override
     public boolean isValid() {
@@ -120,6 +120,7 @@ public class PlantUMLWizardPanel4 implements WizardDescriptor.Panel<WizardDescri
         return changeSupport;
     }
 
+    @Override
     public WizardDescriptor getWizard() {
         return wizard;
     }

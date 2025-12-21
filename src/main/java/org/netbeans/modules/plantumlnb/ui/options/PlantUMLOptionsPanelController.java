@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2014 Venkat Ram Akkineni.
@@ -32,7 +32,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
 /**
- * 
+ *
  * @author markiewb
  */
 @OptionsPanelController.SubRegistration(

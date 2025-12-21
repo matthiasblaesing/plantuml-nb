@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -52,9 +52,9 @@ import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle.Messages;
 
 // TODO define position attribute
-@TemplateRegistration(folder = "PlantUML", 
-        displayName = "#PlantUMLWizardIterator_displayName", 
-        iconBase = "org/netbeans/modules/plantumlnb/icon.png", 
+@TemplateRegistration(folder = "PlantUML",
+        displayName = "#PlantUMLWizardIterator_displayName",
+        iconBase = "org/netbeans/modules/plantumlnb/icon.png",
         description = "PlantUMLFromExistingSourcesDescription.html")
 @Messages("PlantUMLWizardIterator_displayName=PlantUML from existing java sources")
 public final class PlantUMLWizardIterator implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
@@ -73,7 +73,7 @@ public final class PlantUMLWizardIterator implements WizardDescriptor.Instantiat
             panels.add(new PlantUMLWizardPanel2());
             panels.add(new PlantUMLWizardPanel3());
             panels.add(new PlantUMLWizardPanel4());
-            panels.add(new PlantUMLWizardPanel5());            
+            panels.add(new PlantUMLWizardPanel5());
             String[] steps = createSteps();
             for (int i = 0; i < panels.size(); i++) {
                 Component c = panels.get(i).getComponent();
@@ -83,8 +83,7 @@ public final class PlantUMLWizardIterator implements WizardDescriptor.Instantiat
                     // appear in the list of steps.
                     steps[i] = c.getName();
                 }
-                if (c instanceof JComponent) { // assume Swing components
-                    JComponent jc = (JComponent) c;
+                if (c instanceof JComponent jc) { // assume Swing components
                     jc.putClientProperty(WizardDescriptor.PROP_CONTENT_SELECTED_INDEX, i);
                     jc.putClientProperty(WizardDescriptor.PROP_CONTENT_DATA, steps);
                     jc.putClientProperty(WizardDescriptor.PROP_AUTO_WIZARD_STYLE, true);
@@ -96,22 +95,22 @@ public final class PlantUMLWizardIterator implements WizardDescriptor.Instantiat
         return panels;
     }
 
-    // TODO return set of FileObject (or DataObject) you have created    
+    // TODO return set of FileObject (or DataObject) you have created
     @Override
-    public Set<?> instantiate() throws IOException {        
+    public Set<?> instantiate() throws IOException {
         PlantUMLVisualPanel1 firstPanel = (PlantUMLVisualPanel1) panels.get(0).getComponent();
         PlantUMLVisualPanel2 secondPanel = (PlantUMLVisualPanel2) panels.get(1).getComponent();
         PlantUMLVisualPanel3 thirdPanel = (PlantUMLVisualPanel3) panels.get(2).getComponent();
         PlantUMLVisualPanel4 fourthPanel = (PlantUMLVisualPanel4) panels.get(3).getComponent();
         PlantUMLVisualPanel5 fifthPanel = (PlantUMLVisualPanel5) panels.get(4).getComponent();
-        
+
         PlantUMLGenerationRequest request = new PlantUMLGenerationRequest();
         loadFirstPanelData(firstPanel, request);
         loadSecondPanelData(secondPanel, request);
         loadThirdPanelData(thirdPanel, request);
         loadFourthPanelData(fourthPanel, request);
         loadFifthPanelData(fifthPanel, request);
-        
+
         try {
             PlantUMLDependencyService.generate(request);
         } catch (MalformedURLException | CommandLineException | ParseException ex) {
@@ -125,26 +124,26 @@ public final class PlantUMLWizardIterator implements WizardDescriptor.Instantiat
             NotificationDisplayer.getDefault()
                     .notify("PlantUML File From Java Sources", failIcon, failNotificationText, null);
         }
-        
+
         Set<FileObject> fileSet = new HashSet<>();
         if(request.getOutputFile() != null) {
             fileSet.add(FileUtil.toFileObject(request.getOutputFile()));
         }
-        
+
         return fileSet;
     }
-        
+
     private void loadFirstPanelData(final PlantUMLVisualPanel1 firstPanel, final PlantUMLGenerationRequest request) {
         request.setDestinationDirectory(firstPanel.getDestinationDirectoryTextField().getText());
         request.setOutputFileName(firstPanel.getPlantumlFileNameTextField().getText());
         request.setSourcesDirectory(getSourcesDirectory(firstPanel));
     }
-    
+
     private void loadSecondPanelData(final PlantUMLVisualPanel2 secondPanel, final PlantUMLGenerationRequest request) {
         request.setIncludePatterns(secondPanel.getIncludePattern());
         request.setExcludePatterns(secondPanel.getExcludePattern());
     }
-    
+
     private void loadThirdPanelData(final PlantUMLVisualPanel3 thirdPanel, final PlantUMLGenerationRequest request) {
         request.setAbstractClasses(thirdPanel.getAbstractClasses());
         request.setAnnotations(thirdPanel.getAnnotations());
@@ -157,23 +156,23 @@ public final class PlantUMLWizardIterator implements WizardDescriptor.Instantiat
         request.setNativeMethods(thirdPanel.getNativeMethods());
         request.setStaticImports(thirdPanel.getStaticImports());
     }
-    
+
     private void loadFourthPanelData(final PlantUMLVisualPanel4 fourthPanel, final PlantUMLGenerationRequest request) {
         request.setDisplayPackageNameRegex(fourthPanel.getDisplayPackageNameRegex());
     }
-    
+
     private void loadFifthPanelData(final PlantUMLVisualPanel5 fifthPanel, final PlantUMLGenerationRequest request) {
         request.setDisplayNameRegex(fifthPanel.getDisplayNameRegex());
     }
-    
+
     private String getSourcesDirectory(PlantUMLVisualPanel1 firstPanel) {
         JComboBox sourceGroupsComboBox = firstPanel.getSourceGroupsComboBox();
         SourceGroup sourceGroup = (SourceGroup) sourceGroupsComboBox.getSelectedItem();
-        
+
         JComboBox packageSelectionComboBox = firstPanel.getPackageSelectionComboBox();
         String packageName = packageSelectionComboBox.getEditor().getItem().toString();
         packageName = packageName.replace(".", "/");
-        
+
         return sourceGroup.getRootFolder().getPath() + "/" + packageName;
     }
 

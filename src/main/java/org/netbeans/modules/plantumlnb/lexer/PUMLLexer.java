@@ -33,8 +33,8 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
  */
 class PUMLLexer implements Lexer<PUMLTokenId> {
 
-    private LexerRestartInfo<PUMLTokenId> info;
-    private PUMLParserTokenManager javaParserTokenManager;
+    private final LexerRestartInfo<PUMLTokenId> info;
+    private final PUMLParserTokenManager javaParserTokenManager;
 
     PUMLLexer(LexerRestartInfo<PUMLTokenId> info) {
         this.info = info;

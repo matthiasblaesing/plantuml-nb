@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -59,7 +59,7 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         if (component == null) {
             component = new PlantUMLVisualPanel1(this);
         }
-        
+
         return component;
     }
 
@@ -73,7 +73,7 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
 
     /**
      * If it is always OK to press Next or Finish, then:
-     * @return 
+     * @return
      */
     @Override
     public boolean isValid() {
@@ -84,8 +84,8 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
                 && component.getSourceGroupsComboBox().getSelectedIndex() > -1
                 && StringUtils.isNotEmpty(destinationDirectory)
                 && component.getPackageSelectionComboBox().getSelectedItem() != null) {
-            if (component.getPackageSelectionComboBox().getSelectedItem() instanceof String) {
-                return isNotEmpty((String) component.getPackageSelectionComboBox().getSelectedItem());
+            if (component.getPackageSelectionComboBox().getSelectedItem() instanceof String packageSelection) {
+                return isNotEmpty(packageSelection);
             }
             return true;
         }
@@ -110,7 +110,7 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
             listeners.remove(l);
         }
     }
-    
+
     protected final void fireChangeEvent() {
         Set ls;
         synchronized(listeners) {
@@ -119,24 +119,24 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         ChangeEvent ev = new ChangeEvent(this);
         listeners.forEach((l) -> {
             l.stateChanged(ev);
-        });        
+        });
     }
 
     /**
-     * Following code was inspired from JavaTargetChooserPanel and JavaTargetChooserPanelGUI 
-     * in java.project.ui (Java Project Support UI) module of the netbeans. Take a look at 
-     * JavaTargetChooserPanel.readSettings and JavaTargetChooserPanelGUI.initValues for 
+     * Following code was inspired from JavaTargetChooserPanel and JavaTargetChooserPanelGUI
+     * in java.project.ui (Java Project Support UI) module of the netbeans. Take a look at
+     * JavaTargetChooserPanel.readSettings and JavaTargetChooserPanelGUI.initValues for
      * further help.
-     * 
-     * @param wiz 
+     *
+     * @param wiz
      */
     @Override
-    public void readSettings(WizardDescriptor wiz) {        
+    public void readSettings(WizardDescriptor wiz) {
         component.getPlantumlFileNameTextField().setText((String) wiz.getProperty("filename"));
         component.getDestinationDirectoryTextField().setText((String) wiz.getProperty("destinationdirectory"));
-        
+
         String selectedPackageName = (String) wiz.getProperty("packagename");
-        
+
         if (component != null) {
             if (StringUtils.isNotEmpty(selectedPackageName)) {
                 component.getPackageSelectionComboBox().setSelectedItem(selectedPackageName);
@@ -147,7 +147,7 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
                 if (project == null) throw new NullPointerException ("No project found for: " + wiz);
                 if (preselectedFolder != null) {
                     component.getPackageSelectionComboBox().setSelectedItem(selectedPackageName);
-                    
+
                     component.getDestinationDirectoryTextField()
                             .setText(project.getProjectDirectory().getPath());
                     component.getDestinationDirectoryTextField()
@@ -162,7 +162,7 @@ public class PlantUMLWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
                 }
             }
         }
-        
+
     }
 
     @Override

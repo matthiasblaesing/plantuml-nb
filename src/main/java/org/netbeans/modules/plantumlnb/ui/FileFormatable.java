@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -30,7 +30,7 @@ import net.sourceforge.plantuml.FileFormat;
  * @author venkat
  */
 public interface FileFormatable {
-    
+
     public FileFormat getFileFormat();
-    
+
 }

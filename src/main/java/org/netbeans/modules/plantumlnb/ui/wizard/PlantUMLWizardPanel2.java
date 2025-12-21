@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -71,7 +71,7 @@ public class PlantUMLWizardPanel2 implements WizardDescriptor.Panel<WizardDescri
     public boolean isValid() {
         String ip = component.getIncludePattern();
         String ep = component.getExcludePattern();
-        
+
         if (isNotEmpty(ip) && isEmpty(ep)) {
             if (isAntStylePathPattern(ip)) {
                 setErrorMessage(null);
@@ -144,6 +144,7 @@ public class PlantUMLWizardPanel2 implements WizardDescriptor.Panel<WizardDescri
         return changeSupport;
     }
 
+    @Override
     public WizardDescriptor getWizard() {
         return wizard;
     }

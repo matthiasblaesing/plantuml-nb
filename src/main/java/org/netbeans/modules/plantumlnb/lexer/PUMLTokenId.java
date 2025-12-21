@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -59,7 +59,7 @@ public class PUMLTokenId implements TokenId {
     public String name() {
         return name;
     }
-    
+
     public static Language<PUMLTokenId> getLanguage() {
         return new PUMLLanguageHierarchy().language();
     }

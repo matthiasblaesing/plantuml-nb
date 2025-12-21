@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -32,41 +32,41 @@ import org.netbeans.modules.plantumlnb.StringUtils;
  * @author venkat
  */
 public class PlantUMLGenerationRequest {
-    
+
     private String destinationDirectory;
-    
+
     private String outputFileName;
 
     private String sourcesDirectory;
-    
+
     private String includePatterns;
-    
+
     private String excludePatterns;
-    
+
     // Display type options
     private boolean abstractClasses = true;
-    
+
     private boolean annotations = true;
-    
+
     private boolean classes = true;
-    
+
     private boolean enums = true;
-    
+
     private boolean extensions = true;
-    
+
     private boolean implementations = true;
-    
+
     private boolean imports = true;
-    
+
     private boolean interfaces = true;
-    
+
     private boolean nativeMethods = true;
-    
+
     private boolean staticImports = true;
     // End Display type options
-    
+
     private String displayNameRegex = "";
-    
+
     private String displayPackageNameRegex = "";
 
     public PlantUMLGenerationRequest() {
@@ -74,55 +74,55 @@ public class PlantUMLGenerationRequest {
 
     public String getDisplayTypeOptionsString() {
         StringJoiner displayTypeOptionsString = new StringJoiner(",");
-        
+
         if(abstractClasses) {
             displayTypeOptionsString.add(DisplayTypeOptions.abstract_classes.name());
         }
-        
+
         if(annotations) {
             displayTypeOptionsString.add(DisplayTypeOptions.annotations.name());
         }
-        
+
         if(classes) {
             displayTypeOptionsString.add(DisplayTypeOptions.classes.name());
         }
-        
+
         if(enums) {
             displayTypeOptionsString.add(DisplayTypeOptions.enums.name());
         }
-        
+
         if(extensions) {
             displayTypeOptionsString.add(DisplayTypeOptions.extensions.name());
         }
-        
+
         if(implementations) {
             displayTypeOptionsString.add(DisplayTypeOptions.implementations.name());
         }
-        
+
         if(imports) {
             displayTypeOptionsString.add(DisplayTypeOptions.imports.name());
         }
-        
+
         if(interfaces) {
             displayTypeOptionsString.add(DisplayTypeOptions.interfaces.name());
         }
-        
+
         if(nativeMethods) {
             displayTypeOptionsString.add(DisplayTypeOptions.native_methods.name());
         }
-        
+
         if(staticImports) {
             displayTypeOptionsString.add(DisplayTypeOptions.static_imports.name());
         }
-        
+
         return displayTypeOptionsString.toString();
     }
-    
+
     public File getOutputFile() {
         if (StringUtils.isEmpty(destinationDirectory) || StringUtils.isEmpty(outputFileName)) {
             return null;
         }
-        
+
         return new File(destinationDirectory + "/" + outputFileName + ".puml");
     }
 
@@ -130,7 +130,7 @@ public class PlantUMLGenerationRequest {
         if (StringUtils.isEmpty(sourcesDirectory)) {
             return null;
         }
-        
+
         return new File(sourcesDirectory);
     }
 

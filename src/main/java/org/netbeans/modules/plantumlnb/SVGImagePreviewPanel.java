@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -32,11 +32,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,7 +51,6 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
-import org.apache.batik.css.engine.value.ValueConstants;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
 import org.apache.batik.swing.gvt.GVTTreeRendererListener;
 import org.apache.batik.util.CSSConstants;
@@ -77,7 +73,7 @@ import static java.util.Arrays.asList;
  * @author venkat
  */
 public class SVGImagePreviewPanel extends JPanel {
-    
+
     private PUMLJSVGCanvas canvas;
     private String currentImageContent = "";
     private SVGDocument currentDocument = null;
@@ -86,12 +82,12 @@ public class SVGImagePreviewPanel extends JPanel {
     private static final String ROTATE_FACTOR = "0.0872664626";
     private static final Logger logger = Logger.getLogger(SVGImagePreviewPanel.class.getName());
     private final RenderWithTransformGVTTreeRendererListener gvttrListener = new RenderWithTransformGVTTreeRendererListener();
-    
+
     private static SVGImagePreviewPanel instance = null;
-    
+
     /**
-     * 
-     * @param svgFile 
+     *
+     * @param svgFile
      */
     private SVGImagePreviewPanel() {
         canvas = new PUMLJSVGCanvas();
@@ -103,7 +99,7 @@ public class SVGImagePreviewPanel extends JPanel {
         //add popup menu
         List<? extends Action> actionsForPath = Utilities.actionsForPath("Actions/PlantUML/ImageView/Popupmenu");
         if (!actionsForPath.isEmpty()) {
-            Action[] actions = actionsForPath.toArray(new Action[actionsForPath.size()]);
+            Action[] actions = actionsForPath.toArray(Action[]::new);
             popup = Utilities.actionsToPopup(actions, Lookup.EMPTY);
         }
 
@@ -119,6 +115,7 @@ public class SVGImagePreviewPanel extends JPanel {
             boolean isModifierClick = false;
 
             @Override
+            @SuppressWarnings("UnnecessaryReturnStatement")
             public void mousePressed(MouseEvent e) {
                 this.isModifierClick = e.isShiftDown() || e.isAltDown() || e.isAltGraphDown() || e.isControlDown() || e.isMetaDown();
                 if(isModifierClick) {
@@ -129,6 +126,7 @@ public class SVGImagePreviewPanel extends JPanel {
             }
 
             @Override
+            @SuppressWarnings("UnnecessaryReturnStatement")
             public void mouseReleased(MouseEvent e) {
                 if(isModifierClick) {
                     return;
@@ -189,7 +187,7 @@ public class SVGImagePreviewPanel extends JPanel {
 
     public SVGDocument createSVGDocument(StringReader sr) {
         String parser = XMLResourceDescriptor.getXMLParserClassName();
-        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);                     
+        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
 
         try {
             currentDocument = f.createSVGDocument("http://www.w3.org/2000/svg", sr);
@@ -197,33 +195,8 @@ public class SVGImagePreviewPanel extends JPanel {
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        
+
         return currentDocument;
-    }
-    
-    private StringReader readInputStream(InputStream is) {
-        InputStreamReader isr = new InputStreamReader(is);
-        BufferedReader br = new BufferedReader(isr);        
-        
-        String puml = "";
-        String sCurrentLine = "";
-        try {
-            while ((sCurrentLine = br.readLine()) != null) {
-                    puml += sCurrentLine;
-            }
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        } finally {
-            try {
-                is.close();
-                isr.close();
-                br.close(); 
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }            
-        }
-        
-        return new StringReader(puml);
     }
 
     public PUMLJSVGCanvas getCanvas() {
@@ -233,7 +206,7 @@ public class SVGImagePreviewPanel extends JPanel {
     public void setCanvas(PUMLJSVGCanvas canvas) {
         this.canvas = canvas;
     }
-        
+
     public pumlDataObject getCurrentDataObject() {
         return currentDataObject;
     }
@@ -256,35 +229,35 @@ public class SVGImagePreviewPanel extends JPanel {
         if(null == instance) {
             instance = new SVGImagePreviewPanel();
         }
-        
+
         return instance;
     }
-    
+
     //============================================================================
     // Listeners and actions.
     //============================================================================
-    
+
     /**
-     * 
+     *
      */
     private class ResizeListener implements ComponentListener {
-        
+
         @Override
         public void componentResized(ComponentEvent evt) {
             renderSVGFile(currentImageContent);
         }
-        
-        
+
+
         @Override
         public void componentHidden(ComponentEvent evt) {}
-        
+
         @Override
         public void componentShown(ComponentEvent evt) {}
-        
+
         @Override
         public void componentMoved(ComponentEvent evt) {}
     }
-    
+
     /**
       * A swing action to reset the rendering transform of the canvas.
       */
@@ -296,7 +269,7 @@ public class SVGImagePreviewPanel extends JPanel {
              currentDataObject.getCurrentAT().setToIdentity();
          }
      }
- 
+
      /**
       * A swing action to append an affine transform to the current
       * rendering transform. Before the rendering transform is
@@ -305,13 +278,13 @@ public class SVGImagePreviewPanel extends JPanel {
       * the display.
       */
      public class AffineAction extends AbstractAction {
-         
+
          private AffineTransform at;
-         
+
          public AffineAction(AffineTransform at) {
              this.at = at;
          }
- 
+
          @Override
          public void actionPerformed(ActionEvent evt) {
 //             if (canvas.getgvtRoot == null) {
@@ -330,7 +303,7 @@ public class SVGImagePreviewPanel extends JPanel {
                  if(SVGImagePreviewPanel.this.currentDataObject != null ) {
                      SVGImagePreviewPanel.this.currentDataObject.setCurrentAT(t);
                  }
-             }            
+             }
          }
      }
 
@@ -346,21 +319,21 @@ public class SVGImagePreviewPanel extends JPanel {
              super(AffineTransform.getScaleInstance(scaleX, scaleY));
          }
      }
- 
+
      /**
       * A swing action to zoom in the canvas.
       */
      public class ZoomInAction extends ZoomAction {
          ZoomInAction() { super(1/ZOOM_OUT_FACTOR); }
      }
- 
+
      /**
       * A swing action to zoom out the canvas.
       */
      public class ZoomOutAction extends ZoomAction {
          ZoomOutAction() { super(ZOOM_OUT_FACTOR); }
      }
- 
+
      /**
       * A swing action to Rotate the canvas.
       */
@@ -369,7 +342,7 @@ public class SVGImagePreviewPanel extends JPanel {
              super(AffineTransform.getRotateInstance(theta));
          }
      }
-    
+
      /**
       * http://stackoverflow.com/questions/2885173/java-how-to-create-and-write-to-a-file
       * http://www.coderanch.com/t/478152/java/java/Path-Temporary-Directory
@@ -398,9 +371,9 @@ public class SVGImagePreviewPanel extends JPanel {
                  logger.log(Level.SEVERE, ex.getLocalizedMessage());// TODO: Add a user notification
              }
         }
-         
+
      }
-     
+
      public class RenderWithTransformGVTTreeRendererListener implements GVTTreeRendererListener{
 
             @Override
@@ -412,10 +385,10 @@ public class SVGImagePreviewPanel extends JPanel {
             @Override
             public void gvtRenderingCompleted(GVTTreeRendererEvent gvttre) {
                 if (currentDataObject.getCurrentAT() != null) {
-                    canvas.setRenderingTransform(currentDataObject.getCurrentAT());                    
+                    canvas.setRenderingTransform(currentDataObject.getCurrentAT());
                 }
-                
-                /** 
+
+                /**
                  * Remove the listener so that it doesn't affect the normal
                  * zoom, rotate and reset transforms.
                  */
@@ -427,18 +400,18 @@ public class SVGImagePreviewPanel extends JPanel {
 
             @Override
             public void gvtRenderingFailed(GVTTreeRendererEvent gvttre) {}
-            
+
         }
-    
-     
+
+
      public ZoomInAction getZoomInActionInstance() {
          return new ZoomInAction();
      }
-     
+
      public ZoomOutAction getZoomOutActionInstance() {
          return new ZoomOutAction();
      }
-     
+
      /**
       * CCW = Counter Clockwise
       * @return RotateAction
@@ -446,30 +419,30 @@ public class SVGImagePreviewPanel extends JPanel {
      public RotateAction getCCWRotateActionInstance() {
          return new RotateAction(parseRotateFactor("-" + ROTATE_FACTOR));
      }
-     
+
      /**
       * CW = Clockwise
-      * 
+      *
       * @return RotateAction
       */
      public RotateAction getCWRotateActionInstance() {
          return new RotateAction(parseRotateFactor(ROTATE_FACTOR));
      }
-     
+
      private double parseRotateFactor(String radians) {
         double d = 0.0d;
         try {
             d = NumberFormat.getInstance(Locale.US).parse(radians).doubleValue();
         } catch (ParseException ex) {
             logger.log(Level.INFO, "Cannot parse the rotate factor in SVGImagePreviewPanel.getRotateActionInstance");
-        } 
+        }
         return d;
      }
-     
+
      public ResetTransformAction getResetTransformAction() {
          return new ResetTransformAction();
      }
-     
+
      public OpenInBrowserAction getOpenInBrowserAction() {
          return new OpenInBrowserAction();
      }

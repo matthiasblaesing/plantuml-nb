@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -98,57 +98,60 @@ public class CustomZoomPanel extends JPanel {
         add(decreaseText, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     public int getEnlargeFactor() {
         return Integer.parseInt(enlargeText.getText());
     }
-    
+
     public void setEnlargeFactor(int enlargeFactor) {
         enlargeText.setText("" + enlargeFactor); // NOI18N
     }
-    
+
     public int getDecreaseFactor() {
         return Integer.parseInt(decreaseText.getText());
-    } 
-    
+    }
+
     public void setDecreaseFactor(int decreaseFactor) {
         decreaseText.setText("" + decreaseFactor); // NOI18N
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField decreaseText;
     private javax.swing.JLabel decreasingLabel;
     private javax.swing.JLabel enlargeLabel;
     private javax.swing.JTextField enlargeText;
     // End of variables declaration//GEN-END:variables
-    
+
 
     /** Documnet which accepts only digit chars. */
     private static class WholeNumberDocument extends PlainDocument {
 
         /** Overrides superclass method. */
-        public void insertString(int offs, String str, AttributeSet a) 
+        @Override
+        public void insertString(int offs, String str, AttributeSet a)
         throws BadLocationException {
              char[] source = str.toCharArray();
-             StringBuffer result = new StringBuffer();
-             
-             for(int i=0; i<source.length; i++) {
-                 if(Character.isDigit(source[i])) {
-                     result.append(source[i]);
-                 } else { 
-                     if(Boolean.getBoolean("netbeans.debug.excpetions")) // NOI18N
-                         System.err.println("Image: Trying insert non-digit in custom zoom action."); // NOI18N
-                 }
-             }
-             
+             StringBuilder result = new StringBuilder();
+
+             for (int i = 0; i < source.length; i++) {
+                if (Character.isDigit(source[i])) {
+                    result.append(source[i]);
+                } else {
+                    if (Boolean.getBoolean("netbeans.debug.excpetions")) // NOI18N
+                    {
+                        System.err.println("Image: Trying insert non-digit in custom zoom action."); // NOI18N
+                    }
+                }
+            }
+
              // There has to be some number added.
              if(result.length() == 0)
                  return;
-             
+
              super.insertString(offs, result.toString(), a);
          }
-         
-     } // End of nested class WholeNumberDocument. 
 
-    
+     } // End of nested class WholeNumberDocument.
+
+
 }

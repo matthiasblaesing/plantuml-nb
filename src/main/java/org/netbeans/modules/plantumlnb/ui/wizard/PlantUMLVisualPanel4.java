@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -123,7 +123,7 @@ public final class PlantUMLVisualPanel4 extends JPanel implements GenericDocumen
     public ValidatingWizardPanel getValidatingWizardPanel() {
         return plantUMLWizardPanel4;
     }
-    
+
     public static PlantUMLVisualPanel4 createInstance(final PlantUMLWizardPanel4 plantUMLWizardPanel4) {
         PlantUMLVisualPanel4 plantUMLVisualPanel4 = new PlantUMLVisualPanel4();
         plantUMLVisualPanel4.init(plantUMLWizardPanel4);

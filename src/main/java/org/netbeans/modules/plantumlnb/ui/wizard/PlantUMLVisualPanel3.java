@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -65,7 +65,7 @@ public final class PlantUMLVisualPanel3 extends JPanel implements GenericDocumen
     public String getName() {
         return "Choose display type options";
     }
-    
+
     public boolean isAtleastOneDisplayTypeOptionSelected() {
         return abstractClassesCheckBox.isSelected() ||
                 annotationsCheckBox.isSelected() ||
@@ -267,43 +267,43 @@ public final class PlantUMLVisualPanel3 extends JPanel implements GenericDocumen
     }// </editor-fold>//GEN-END:initComponents
 
     private void abstractClassesCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abstractClassesCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_abstractClassesCheckBoxActionPerformed
 
     private void annotationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annotationsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_annotationsCheckBoxActionPerformed
 
     private void enumsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enumsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_enumsCheckBoxActionPerformed
 
     private void classesCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_classesCheckBoxActionPerformed
 
     private void importsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_importsCheckBoxActionPerformed
 
     private void interfacesCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interfacesCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_interfacesCheckBoxActionPerformed
 
     private void implementationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_implementationsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_implementationsCheckBoxActionPerformed
 
     private void extensionsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extensionsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_extensionsCheckBoxActionPerformed
 
     private void staticImportsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staticImportsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_staticImportsCheckBoxActionPerformed
 
     private void nativeMethodsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nativeMethodsCheckBoxActionPerformed
-        
+
     }//GEN-LAST:event_nativeMethodsCheckBoxActionPerformed
 
     private void checkAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAllButtonActionPerformed
@@ -341,7 +341,7 @@ public final class PlantUMLVisualPanel3 extends JPanel implements GenericDocumen
         nativeMethodsCheckBox.setSelected(true);
         staticImportsCheckBox.setSelected(true);
     }
-    
+
     private void uncheckAll() {
         abstractClassesCheckBox.setSelected(false);
         annotationsCheckBox.setSelected(false);
@@ -354,7 +354,7 @@ public final class PlantUMLVisualPanel3 extends JPanel implements GenericDocumen
         nativeMethodsCheckBox.setSelected(false);
         staticImportsCheckBox.setSelected(false);
     }
-    
+
     public boolean getAbstractClasses() {
         return abstractClassesCheckBox.isSelected();
     }

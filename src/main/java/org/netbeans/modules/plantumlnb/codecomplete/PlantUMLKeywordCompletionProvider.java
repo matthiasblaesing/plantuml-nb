@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -47,57 +47,14 @@ public class PlantUMLKeywordCompletionProvider implements CompletionProvider {
          * We need to test whether the user pressed the keys applicable to the COMPLETION_QUERY_TYPE.
          */
         if (queryType != CompletionProvider.COMPLETION_QUERY_TYPE) return null;
-        
+
         return new AsyncCompletionTask(new AsyncCompletionQuery(){
-           
-            
+
+
             @Override
             protected void query(CompletionResultSet crs, Document dcmnt, int caretOffset) {
                 PlantUMLKeywords.find(crs, dcmnt, caretOffset).finish();
             }
-
-//            @Override
-//            protected boolean canFilter(JTextComponent component) {
-////                int currentCaretPosition = component.getCaretPosition();
-////                System.out.println(currentCaretPosition);
-//                return true;
-//            }
-//
-//            @Override
-//            protected void filter(CompletionResultSet resultSet) {
-//                super.filter(resultSet); //To change body of generated methods, choose Tools | Templates.
-//            }
-//            
-//            private int getRowFirstNonWhite(StyledDocument doc, int offset) throws BadLocationException {
-//                Element lineElement = doc.getParagraphElement(offset);
-//                int start = lineElement.getStartOffset();
-//                while (start + 1 < lineElement.getEndOffset()) {
-//                    try {
-//                        if (doc.getText(start, 1).charAt(0) != ' ') {
-//                            break;
-//                        }
-//                    } catch (BadLocationException ex) {
-//                        throw (BadLocationException) new BadLocationException(
-//                                "calling getText(" + start + ", " + (start + 1)
-//                                + ") on doc of length: " + doc.getLength(), start
-//                        ).initCause(ex);
-//                    }
-//                    start++;
-//                }
-//                return start;
-//            }
-//
-//            private int indexOfWhite(char[] line) {
-//                int i = line.length;
-//                while (--i > -1) {
-//                    final char c = line[i];
-//                    if (Character.isWhitespace(c)) {
-//                        return i;
-//                    }
-//                }
-//                return -1;
-//            }
-//            
         });
     }
 
@@ -105,5 +62,5 @@ public class PlantUMLKeywordCompletionProvider implements CompletionProvider {
     public int getAutoQueryTypes(JTextComponent jtc, String string) {
         return 1;
     }
-    
+
 }

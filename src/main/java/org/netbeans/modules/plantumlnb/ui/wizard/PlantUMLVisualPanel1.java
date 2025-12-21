@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -56,23 +56,24 @@ import static org.netbeans.modules.plantumlnb.StringUtils.isNotEmpty;
 import static org.netbeans.modules.plantumlnb.ui.wizard.Bundle.PlantUMLVisualPanel1_destinationDirectoryButton_text;
 
 public final class PlantUMLVisualPanel1 extends JPanel {
-    
-    private PlantUMLWizardPanel1 plantUMLWizardPanel1;
+
+    private static final Logger LOG = Logger.getLogger(PlantUMLVisualPanel1.class.getName());
+
+    private final PlantUMLWizardPanel1 plantUMLWizardPanel1;
     private JFileChooser fileChooser = null;
     private SourceGroup[] sourceGroups;
-    private static final Logger LOG = Logger.getLogger(PlantUMLVisualPanel1.class.getName());
 
     /**
      * Creates new form PlantUMLVisualPanel1
      */
     public PlantUMLVisualPanel1(PlantUMLWizardPanel1 plantUMLWizardPanel1) {
         initComponents();
-        
+
         this.plantUMLWizardPanel1 = plantUMLWizardPanel1;
-        
-        sourceGroupsComboBox.setRenderer(new SourceGroupListCellRenderer());        
+
+        sourceGroupsComboBox.setRenderer(new SourceGroupListCellRenderer());
         packageSelectionComboBox.setRenderer(PackageView.listRenderer());
-        
+
         getPlantumlFileNameTextField().getDocument().addDocumentListener(new GenericDocumentListener());
         getDestinationDirectoryTextField().getDocument().addDocumentListener(new GenericDocumentListener());
     }
@@ -84,9 +85,9 @@ public final class PlantUMLVisualPanel1 extends JPanel {
 
     @Override
     public void validate() {
-        super.validate();         
+        super.validate();
     }
-    
+
     public void updateUI(DocumentEvent e) {
         if (getPlantumlFileNameTextField().getDocument() == e.getDocument()) {
             firePropertyChange(DESTINATION_DIRECTORY, null, destinationDirectoryTextField.getText());
@@ -101,7 +102,7 @@ public final class PlantUMLVisualPanel1 extends JPanel {
 
     public void initValues( FileObject template, FileObject preselectedFolder, SourceGroup[] sourceGroups ) {
         this.sourceGroups = sourceGroups;
-        
+
         sourceGroupsComboBox.setModel(new DefaultComboBoxModel(sourceGroups));
         SourceGroup preselectedGroup = getPreselectedGroup(preselectedFolder);
         sourceGroupsComboBox.setSelectedItem(preselectedGroup);
@@ -111,55 +112,53 @@ public final class PlantUMLVisualPanel1 extends JPanel {
 
 //        setSelectedPackage(preselectedFolder);
     }
-    
+
     private String showOpenDialog(String dialogTitle) {
         fileChooser = new JFileChooser(new File(System.getProperty("user.home")));
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setDialogTitle(dialogTitle);
         Project mainProject = OpenProjects.getDefault().getMainProject();
         File currentDirectory = new File(System.getProperty("user.home"));
-        
+
         if(mainProject != null) {
             currentDirectory = FileUtil.toFile(mainProject.getProjectDirectory());
-        } 
-        
-        fileChooser.setCurrentDirectory(currentDirectory);        
+        }
+
+        fileChooser.setCurrentDirectory(currentDirectory);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             //This is where a real application would open the file.
             LOG.log(Level.INFO, "Opening: {0}.", new Object[]{file.getName()});
             return fileChooser.getSelectedFile().getAbsolutePath();
-        } 
-        
+        }
+
         LOG.log(Level.INFO, "Open command cancelled by user.");
         return null;
-               
+
     }
-    
+
     private RequestProcessor.Task updatePackagesTask = null;
-    
-    private static final ComboBoxModel WAIT_MODEL = new DefaultComboBoxModel( 
+
+    private static final ComboBoxModel WAIT_MODEL = new DefaultComboBoxModel(
         new String[] {
             NbBundle.getMessage( PlantUMLVisualPanel1.class, "PlantUMLVisualPanel1_PackageName_PleaseWait" ) // NOI18N
-        } 
-    ); 
-    
+        }
+    );
+
     private void setSelectedPackage(final FileObject selectedDirectory) {
         Optional<String> selectedPackage = getSelectedPackage(selectedDirectory);
 
-        if (selectedPackage != null) {
-            int selectedIndex = IntStream.of(packageSelectionComboBox.getItemCount())
-                .filter(index -> packageSelectionComboBox.getItemAt(index)
-                .equals(selectedPackage.orElse("")))
-                .findFirst()
-                .getAsInt();
+        int selectedIndex = IntStream.of(packageSelectionComboBox.getItemCount())
+            .filter(index -> packageSelectionComboBox.getItemAt(index)
+            .equals(selectedPackage.orElse("")))
+            .findFirst()
+            .getAsInt();
 
-            packageSelectionComboBox.setSelectedIndex(selectedIndex);
-        }
+        packageSelectionComboBox.setSelectedIndex(selectedIndex);
         packageSelectionComboBox.setToolTipText(selectedPackage.orElse(""));
     }
-    
+
     private void updatePackages(final SourceGroup selectedSourceGroup, final String selDir) {
         WAIT_MODEL.setSelectedItem(packageSelectionComboBox.getEditor()
                 .getItem());
@@ -167,7 +166,7 @@ public final class PlantUMLVisualPanel1 extends JPanel {
         if ( updatePackagesTask != null) {
             updatePackagesTask.cancel();
         }
-        
+
         if (sourceGroups != null && sourceGroups.length > 0) {
             SourceGroup sourceGroup = selectedSourceGroup == null ? sourceGroups[0] : selectedSourceGroup;
 
@@ -182,24 +181,24 @@ public final class PlantUMLVisualPanel1 extends JPanel {
             });
         }
     }
-    
+
     private SourceGroup getPreselectedGroup(FileObject folder) {
         if (folder == null) {
             return sourceGroups[0];
         }
-        
+
         Optional<SourceGroup> selectedSourceGroup = Arrays.asList(sourceGroups).stream().filter(sourceGroup -> {
             FileObject root = ((SourceGroup) sourceGroup).getRootFolder();
             return root.equals(folder) || FileUtil.isParentOf(root, folder);
         }).findFirst();
-        
+
         if (!selectedSourceGroup.isPresent()) {
             return Arrays.asList(sourceGroups).get(0);
         }
-        
+
         return selectedSourceGroup.get();
     }
-    
+
     /**
      * Get a package combo model item for the package the user selected before opening the wizard.
      * May return null if it cannot find it; or a String instance if there is a well-defined
@@ -212,13 +211,13 @@ public final class PlantUMLVisualPanel1 extends JPanel {
         }
         FileObject root = selectedGroup.getRootFolder();
         String relPath = FileUtil.getRelativePath( root, selectedDirectory );
-        
+
         if ( relPath != null ) {
             relPath = relPath.replace('/', '.');
-        }        
+        }
         return Optional.ofNullable(relPath);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
      * content of this method is always regenerated by the Form Editor.
@@ -348,7 +347,7 @@ public final class PlantUMLVisualPanel1 extends JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-   
+
     @NbBundle.Messages("PlantUMLVisualPanel1.destinationDirectoryButton.text=...")
     private void destinationDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_destinationDirectoryButtonActionPerformed
         String returnVal = showOpenDialog(PlantUMLVisualPanel1_destinationDirectoryButton_text());
@@ -367,7 +366,7 @@ public final class PlantUMLVisualPanel1 extends JPanel {
             } else {
                 destDir += destDir.endsWith(CharacterConstants.SLASH_CHAR) ? "" : CharacterConstants.SLASH_CHAR;
             }
-            
+
             String fqFileName = destDir + plantumlFileNameTextField.getText() + ".puml";
             generatedFileNameDisplayTextArea.setText(fqFileName);
             generatedFileNameDisplayTextArea.setToolTipText(fqFileName);
@@ -403,8 +402,8 @@ public final class PlantUMLVisualPanel1 extends JPanel {
 
     private static final String DESTINATION_DIRECTORY = "destinationDirectoryTextField";
     private static final String PACKAGE_SELECTION = "packageSelectionInputDirectory";
-    
-    
+
+
     public JTextField getDestinationDirectoryTextField() {
         return destinationDirectoryTextField;
     }
@@ -436,9 +435,9 @@ public final class PlantUMLVisualPanel1 extends JPanel {
     public void setSourceGroupsComboBox(JComboBox<String> sourceGroupsComboBox) {
         this.sourceGroupsComboBox = sourceGroupsComboBox;
     }
-    
+
     class GenericDocumentListener implements DocumentListener {
-        
+
         @Override
         public void insertUpdate(DocumentEvent e) {
             plantUMLWizardPanel1.fireChangeEvent();

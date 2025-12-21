@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -30,14 +30,14 @@ import java.io.File;
  * @author venkat
  */
 public class ImageUtils {
-    
+
     public final static String png = "png";
     public final static String svg = "svg";
     public final static String eps = "eps";
-    
+
     /*
      * Get the extension of a file.
-     */  
+     */
     public static String getExtension(File f) {
         String ext = null;
         String s = f.getName();
@@ -48,5 +48,5 @@ public class ImageUtils {
         }
         return ext;
     }
-    
+
 }

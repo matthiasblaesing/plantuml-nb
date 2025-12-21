@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2013 Venkat Ram Akkineni.
@@ -60,21 +60,10 @@ public class ImagePreviewPanel extends JPanel {
 
             int width = image.getWidth();
             int height = image.getHeight();
-            String sizes = "Dimensions: " + width + " x " + height;
 
-//            g.drawString(sizes, (int) (this.getWidth() * 0.05), this.getHeight() - stringGapSize);
-            // adapt image width and height to the size of Navigator window
-//            double widthRatio = ((double) image.getWidth()) / (((double) this.getWidth()) * 0.9);
-//            double heightRatio = ((double) image.getHeight()) / (((double) this.getHeight()) * 0.9 - stringGapSize - 20);
-//            if (widthRatio > 1 || heightRatio > 1) {
-//                double ratio = widthRatio > heightRatio ? widthRatio : heightRatio;
-//                width = (int) (((double) image.getWidth()) / ratio);
-//                height = (int) (((double) image.getHeight()) / ratio);
-//            }
             this.setPreferredSize(new Dimension(width + 100, height + 100));
             g.drawImage(image, (this.getWidth() - width) / 2, (this.getHeight() - height) / 2, width, height, this);
-            
-//            setBounds(this.getX(), this.getY(), width, height);
+
         } else {
             g.setColor(Color.RED);
             FontMetrics fm = this.getFontMetrics(g.getFont()) ;
@@ -84,11 +73,11 @@ public class ImagePreviewPanel extends JPanel {
             try {
                 defaultIcon = ImageIO.read(getClass().getResourceAsStream("default-icon.png"));
             } catch(IOException ioe){
-                Logger.getLogger(ImagePreviewPanel.class.getName()).info(ioe.toString());             
+                Logger.getLogger(ImagePreviewPanel.class.getName()).info(ioe.toString());
             }
             int width = defaultIcon.getWidth();
             int height = defaultIcon.getHeight();
-                        
+
             g.drawImage(defaultIcon, (this.getWidth() - stringWidth) / 2, this.getHeight() / 2, width, height, this);
         }
     }

@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Venkat Ram Akkineni.
@@ -42,18 +42,18 @@ import net.sourceforge.plantumldependency.commoncli.program.execution.JavaProgra
  * @author Venkat Ram Akkineni
  */
 public class PlantUMLDependencyService {
-    
+
 
     public static void generate(File directory, File outputFile) throws MalformedURLException, CommandLineException, ParseException {
         final CommandLine commandLineArguments = new CommandLineImpl(new String[] {
-            "-o", outputFile.getAbsolutePath(), 
-            "-b", directory.getAbsolutePath(), 
+            "-o", outputFile.getAbsolutePath(),
+            "-b", directory.getAbsolutePath(),
             "-e", "**/package-info.java"
         });
-        
+
         generate(commandLineArguments);
     }
-    
+
     public static void generate(final PlantUMLGenerationRequest request) throws MalformedURLException, CommandLineException, ParseException {
         List<String> commandLineArgs = new ArrayList<>();
         commandLineArgs.addAll(Arrays.asList(
@@ -61,32 +61,32 @@ public class PlantUMLDependencyService {
             "-b", request.getSourcesDirectoryFile().getAbsolutePath(),
             "-dt", request.getDisplayTypeOptionsString()
         ));
-        
+
         // Default "**/package-info.java" if unspecified.
         if (StringUtils.isNotEmpty(request.getExcludePatterns())) {
             commandLineArgs.addAll(Arrays.asList("-e", request.getExcludePatterns()));
         }
-        
+
         // Default "**/*.java" if unspecified
         if (StringUtils.isNotEmpty(request.getIncludePatterns())) {
             commandLineArgs.addAll(Arrays.asList("-i", request.getIncludePatterns()));
         }
-        
+
         if (StringUtils.isNotEmpty(request.getDisplayNameRegex())) {
             commandLineArgs.addAll(Arrays.asList("-dn", request.getDisplayNameRegex()));
         }
-        
+
         if (StringUtils.isNotEmpty(request.getDisplayPackageNameRegex())) {
             commandLineArgs.addAll(Arrays.asList("-dp", request.getDisplayPackageNameRegex()));
         }
-        
-        final CommandLine commandLineArguments = new CommandLineImpl(commandLineArgs.toArray(new String[commandLineArgs.size()]));
-        
+
+        final CommandLine commandLineArguments = new CommandLineImpl(commandLineArgs.toArray(String[]::new));
+
         generate(commandLineArguments);
     }
-    
+
     private static void generate(final CommandLine commandLineArguments) throws MalformedURLException, CommandLineException, ParseException {
-        
+
         // Creates the PlantUML Dependency program instance
         final JavaProgram plantumlDependencyProgram = new PlantUMLDependencyProgram();
 

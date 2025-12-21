@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2014 Venkat Ram Akkineni.
@@ -37,7 +37,7 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.NbPreferences;
 
 /**
- * 
+ *
  * @author markiewb
  */
 public final class PlantUMLPanel extends javax.swing.JPanel {

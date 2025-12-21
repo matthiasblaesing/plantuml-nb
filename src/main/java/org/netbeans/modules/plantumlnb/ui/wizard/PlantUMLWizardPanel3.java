@@ -109,6 +109,7 @@ public class PlantUMLWizardPanel3 implements WizardDescriptor.Panel<WizardDescri
         return changeSupport;
     }
 
+    @Override
     public WizardDescriptor getWizard() {
         return wizard;
     }
