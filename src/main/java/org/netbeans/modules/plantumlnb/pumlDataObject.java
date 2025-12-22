@@ -23,20 +23,9 @@
  */
 package org.netbeans.modules.plantumlnb;
 
-import java.awt.geom.AffineTransform;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import org.netbeans.core.api.multiview.MultiViews;
 import org.netbeans.core.spi.multiview.MultiViewElement;
 import org.netbeans.core.spi.multiview.text.MultiViewEditorElement;
-import org.netbeans.modules.plantumlnb.ui.PUMLTopComponent;
-import org.netbeans.modules.plantumlnb.ui.pumlVisualElement;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -50,8 +39,6 @@ import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
 import org.openide.loaders.MultiFileLoader;
-import org.openide.text.CloneableEditorSupport;
-import org.openide.text.CloneableEditorSupport.Pane;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
@@ -123,16 +110,12 @@ import org.openide.windows.TopComponent;
         position = 1400
     )
 })
-public class pumlDataObject extends MultiDataObject implements FileChangeListener, Callable<CloneableEditorSupport.Pane>, PropertyChangeListener {
-    private static final Logger LOG = Logger.getLogger(pumlDataObject.class.getName());
-    private AffineTransform currentAT;
+public class pumlDataObject extends MultiDataObject implements FileChangeListener {
 
     public pumlDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);
         pf.addFileChangeListener(this);
         registerEditor("text/x-puml", true);
-
-        this.currentAT = new AffineTransform();
     }
 
     @Override
@@ -150,7 +133,7 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     )
     @Messages("LBL_puml_EDITOR=Source")
     public static MultiViewEditorElement createEditor(Lookup lkp) {
-        return ((MultiViewEditorElement ) new pumlVisualElement(lkp));
+        return new MultiViewEditorElement(lkp);
     }
 
     @Override
@@ -160,15 +143,7 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     public void fileDataCreated(FileEvent fe) {}
 
     @Override
-    public void fileChanged(FileEvent fe) {
-        SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run() {
-                PUMLTopComponent tc = PUMLTopComponent.getInstance();
-                tc.setNewContent(pumlDataObject.this);
-            }
-        });
-    }
+    public void fileChanged(FileEvent fe) {}
 
     @Override
     public void fileDeleted(FileEvent fe) {}
@@ -179,29 +154,4 @@ public class pumlDataObject extends MultiDataObject implements FileChangeListene
     @Override
     public void fileAttributeChanged(FileAttributeEvent fae) {}
 
-    /**
-     * https://blogs.oracle.com/geertjan/entry/adding_a_history_tab_to
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Pane call() throws Exception {
-        return (Pane) MultiViews.createCloneableMultiView("text/x-puml", this);
-    }
-
-    public AffineTransform getCurrentAT() {
-        return currentAT;
-    }
-
-    public void setCurrentAT(AffineTransform currentAT) {
-        this.currentAT = currentAT;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.currentAT = (AffineTransform) evt.getNewValue();
-        double[] flatMatrix = new double[6];
-        this.currentAT.getMatrix(flatMatrix);
-        LOG.log(Level.FINE, () -> "Current Transform: " + Arrays.toString(flatMatrix));
-    }
 }

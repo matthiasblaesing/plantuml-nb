@@ -27,8 +27,6 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
@@ -43,22 +41,23 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
-import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
-import org.apache.batik.swing.gvt.GVTTreeRendererListener;
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.netbeans.api.annotations.common.NonNull;
-import org.netbeans.modules.plantumlnb.ui.PUMLJSVGCanvas;
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
+import org.openide.util.RequestProcessor;
 import org.openide.util.Utilities;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -72,26 +71,20 @@ import static java.util.Arrays.asList;
  *
  * @author venkat
  */
-public class SVGImagePreviewPanel extends JPanel {
+public class SVGImagePreviewPanel extends JSVGCanvas {
 
-    private PUMLJSVGCanvas canvas;
-    private String currentImageContent = "";
-    private SVGDocument currentDocument = null;
-    private pumlDataObject currentDataObject;
+    private static final Logger logger = Logger.getLogger(SVGImagePreviewPanel.class.getName());
     private static final double ZOOM_OUT_FACTOR = 0.9;
     private static final String ROTATE_FACTOR = "0.0872664626";
-    private static final Logger logger = Logger.getLogger(SVGImagePreviewPanel.class.getName());
-    private final RenderWithTransformGVTTreeRendererListener gvttrListener = new RenderWithTransformGVTTreeRendererListener();
+    private static final RequestProcessor WORKER = new RequestProcessor(SVGImagePreviewPanel.class.getName());
 
-    private static SVGImagePreviewPanel instance = null;
+    private String currentImageContent = "";
 
     /**
      *
      * @param svgFile
      */
-    private SVGImagePreviewPanel() {
-        canvas = new PUMLJSVGCanvas();
-
+    public SVGImagePreviewPanel() {
         //http://mail-archives.apache.org/mod_mbox/xmlgraphics-batik-users/200811.mbox/%3C82615BD530B1FA449BAEB584F01FFDBA0169E9FE@UHQEX30.ad.jfcom.mil%3E
         //http://mcc.id.au/2007/09/batik-course/
 
@@ -105,13 +98,12 @@ public class SVGImagePreviewPanel extends JPanel {
 
         final JPopupMenu finalPopup = popup;
 
-        addComponentListener(new ResizeListener());
-        canvas.setEnableImageZoomInteractor(true);
-        canvas.setEnablePanInteractor(true);
-        canvas.setEnableResetTransformInteractor(true);
-        canvas.setEnableRotateInteractor(true);
-        canvas.setEnableZoomInteractor(true);
-        canvas.addMouseListener(new MouseAdapter() {
+        setEnableImageZoomInteractor(true);
+        setEnablePanInteractor(true);
+        setEnableResetTransformInteractor(true);
+        setEnableRotateInteractor(true);
+        setEnableZoomInteractor(true);
+        addMouseListener(new MouseAdapter() {
             boolean isModifierClick = false;
 
             @Override
@@ -121,7 +113,7 @@ public class SVGImagePreviewPanel extends JPanel {
                 if(isModifierClick) {
                     return;
                 } else if(e.isPopupTrigger() && finalPopup != null) {
-                    finalPopup.show(canvas, e.getX(), e.getY());
+                    finalPopup.show(SVGImagePreviewPanel.this, e.getX(), e.getY());
                 }
             }
 
@@ -131,32 +123,45 @@ public class SVGImagePreviewPanel extends JPanel {
                 if(isModifierClick) {
                     return;
                 } else if(e.isPopupTrigger() && finalPopup != null) {
-                    finalPopup.show(canvas, e.getX(), e.getY());
+                    finalPopup.show(SVGImagePreviewPanel.this, e.getX(), e.getY());
                 }
             }
         });
-
-        add("Center", canvas);
     }
 
-    public void renderSVGFileOnTabSwitch(@NonNull String imageContent) {
-        canvas.addGVTTreeRendererListener(gvttrListener);
-        renderSVGFile(imageContent);
+    public void renderSVGFile(@NonNull Supplier<String> svgGenerator) {
+        Objects.requireNonNull(svgGenerator);
+        WORKER.submit(() -> {
+            try {
+                String svgInput = svgGenerator.get();
+                SVGDocument doc = createDocument(svgInput);
+                SwingUtilities.invokeLater(() -> {
+                    setSVGDocument(doc);
+                    currentImageContent = svgInput;
+                });
+            } catch (IOException ex) {
+                logger.log(Level.INFO, "Failed to render SVG", ex);
+            }
+        });
     }
 
-    /**
-     * @param imageContent
-     */
-    public void renderSVGFile(@NonNull String imageContent) {
-        if(!"".equals(imageContent)) {
-            currentImageContent = imageContent;
-            canvas.setSize(getSize());
-            SVGDocument doc = createSVGDocument(new StringReader(imageContent));
-            makeBatikCompatible(doc);
-            canvas.setSVGDocument(doc);
-        } else {
-            logger.log(Level.INFO, "Svg image content is either null or empty, so, refraining for rendering the current plantuml image. ");
-        }
+    @Override
+    protected boolean updateRenderingTransform() {
+        return false;
+    }
+
+    @Override
+    public void setGraphicsNode(GraphicsNode gn, boolean createDispatcher) {
+        AffineTransform originalTransform = new AffineTransform(getRenderingTransform());
+        super.setGraphicsNode(gn, createDispatcher);
+        super.setRenderingTransform(originalTransform, false);
+    }
+
+    @Override
+    public void setRenderingTransform(AffineTransform at, boolean performRedraw) {
+        AffineTransform originalTransform = new AffineTransform(getRenderingTransform());
+        super.setRenderingTransform(at, performRedraw);
+        pcs.firePropertyChange("renderingTransform", originalTransform, at);
     }
 
     private static final Set<String> SUPPORTED_TEXT_DECORATION = Collections.
@@ -164,11 +169,18 @@ public class SVGImagePreviewPanel extends JPanel {
                     CSSConstants.CSS_BLINK_VALUE, CSSConstants.CSS_LINE_THROUGH_VALUE,
                     CSSConstants.CSS_UNDERLINE_VALUE, CSSConstants.CSS_OVERLINE_VALUE
             )));
-    private void makeBatikCompatible(SVGDocument input) {
+
+
+    static SVGDocument createDocument(String svgInput) throws IOException {
+        String parser = XMLResourceDescriptor.getXMLParserClassName();
+        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+        SVGDocument result = f.createSVGDocument("http://www.w3.org/2000/svg", new StringReader(svgInput));
+        result.getRootElement().getAttributes().removeNamedItem("preserveAspectRatio");
+
         // Batik does not support text-decoration "wavy underline", which is
         // generated in the case of an error. This reduces the attribute to the
         // supported set
-        NodeList textElements = input.getElementsByTagName("text");
+        NodeList textElements = result.getElementsByTagName("text");
         for(int i = 0; i < textElements.getLength(); i++) {
             Element textElement = (Element) textElements.item(i);
             String value = textElement.getAttribute("text-decoration");
@@ -183,54 +195,8 @@ public class SVGImagePreviewPanel extends JPanel {
                 textElement.setAttribute("text-decoration", newValue.toString());
             }
         }
-    }
 
-    public SVGDocument createSVGDocument(StringReader sr) {
-        String parser = XMLResourceDescriptor.getXMLParserClassName();
-        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-
-        try {
-            currentDocument = f.createSVGDocument("http://www.w3.org/2000/svg", sr);
-            currentDocument.getRootElement().getAttributes().removeNamedItem("preserveAspectRatio");
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-
-        return currentDocument;
-    }
-
-    public PUMLJSVGCanvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas(PUMLJSVGCanvas canvas) {
-        this.canvas = canvas;
-    }
-
-    public pumlDataObject getCurrentDataObject() {
-        return currentDataObject;
-    }
-
-    /**
-     * Unbind the currentDataObject and bind the new one. This way everytime a
-     * tab switch happens, correct dataObject ( i.e. the dataObject of the
-     * plantuml currently displaying inside the Preview panel ) is listening to
-     * changes in the AffineTransform.
-     *
-     * @param newDataObject
-     */
-    public void setCurrentDataObject(@NonNull pumlDataObject newDataObject) {
-        canvas.removePropertyChangeListener(PUMLJSVGCanvas.renderingTransformPropertyName, this.currentDataObject);
-        this.currentDataObject = newDataObject;
-        canvas.addPropertyChangeListener(PUMLJSVGCanvas.renderingTransformPropertyName, this.currentDataObject);
-    }
-
-    public static SVGImagePreviewPanel getInstance() {
-        if(null == instance) {
-            instance = new SVGImagePreviewPanel();
-        }
-
-        return instance;
+        return result;
     }
 
     //============================================================================
@@ -238,35 +204,13 @@ public class SVGImagePreviewPanel extends JPanel {
     //============================================================================
 
     /**
-     *
-     */
-    private class ResizeListener implements ComponentListener {
-
-        @Override
-        public void componentResized(ComponentEvent evt) {
-            renderSVGFile(currentImageContent);
-        }
-
-
-        @Override
-        public void componentHidden(ComponentEvent evt) {}
-
-        @Override
-        public void componentShown(ComponentEvent evt) {}
-
-        @Override
-        public void componentMoved(ComponentEvent evt) {}
-    }
-
-    /**
       * A swing action to reset the rendering transform of the canvas.
       */
      public class ResetTransformAction extends AbstractAction {
          @Override
          public void actionPerformed(ActionEvent evt) {
-             canvas.setFragmentIdentifier(null);
-             canvas.resetRenderingTransform();
-             currentDataObject.getCurrentAT().setToIdentity();
+             setFragmentIdentifier(null);
+             resetRenderingTransform();
          }
      }
 
@@ -287,22 +231,16 @@ public class SVGImagePreviewPanel extends JPanel {
 
          @Override
          public void actionPerformed(ActionEvent evt) {
-//             if (canvas.getgvtRoot == null) {
-//                 return;
-//             }
-             AffineTransform rat = canvas.getRenderingTransform();
+             AffineTransform rat = getRenderingTransform();
              if (at != null) {
-                 Dimension dim = canvas.getSize();
+                 Dimension dim = getSize();
                  int x = dim.width / 2;
                  int y = dim.height / 2;
                  AffineTransform t = AffineTransform.getTranslateInstance(x, y);
                  t.concatenate(at);
                  t.translate(-x, -y);
                  t.concatenate(rat);
-                 canvas.setRenderingTransform(t);
-                 if(SVGImagePreviewPanel.this.currentDataObject != null ) {
-                     SVGImagePreviewPanel.this.currentDataObject.setCurrentAT(t);
-                 }
+                 setRenderingTransform(t);
              }
          }
      }
@@ -374,35 +312,6 @@ public class SVGImagePreviewPanel extends JPanel {
 
      }
 
-     public class RenderWithTransformGVTTreeRendererListener implements GVTTreeRendererListener{
-
-            @Override
-            public void gvtRenderingPrepare(GVTTreeRendererEvent gvttre) {}
-
-            @Override
-            public void gvtRenderingStarted(GVTTreeRendererEvent gvttre) {}
-
-            @Override
-            public void gvtRenderingCompleted(GVTTreeRendererEvent gvttre) {
-                if (currentDataObject.getCurrentAT() != null) {
-                    canvas.setRenderingTransform(currentDataObject.getCurrentAT());
-                }
-
-                /**
-                 * Remove the listener so that it doesn't affect the normal
-                 * zoom, rotate and reset transforms.
-                 */
-                canvas.removeGVTTreeRendererListener(this);
-            }
-
-            @Override
-            public void gvtRenderingCancelled(GVTTreeRendererEvent gvttre) {}
-
-            @Override
-            public void gvtRenderingFailed(GVTTreeRendererEvent gvttre) {}
-
-        }
-
 
      public ZoomInAction getZoomInActionInstance() {
          return new ZoomInAction();
@@ -446,4 +355,5 @@ public class SVGImagePreviewPanel extends JPanel {
      public OpenInBrowserAction getOpenInBrowserAction() {
          return new OpenInBrowserAction();
      }
+
 }

@@ -23,8 +23,6 @@
  */
 package org.netbeans.modules.plantumlnb.ui;
 
-import java.awt.geom.AffineTransform;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
@@ -41,34 +39,24 @@ import org.openide.util.NbBundle.Messages;
 @Messages({
     "ACSN_Toolbar=Zoom Toolbar",
 })
-public class Toolbar {
+public class Toolbar extends JToolBar {
 
-    private AffineTransform currentAt = null;
-    private PUMLJSVGCanvas canvas = null;
-    private SVGImagePreviewPanel svgImagePreviewPanel = null;
+    private final SVGImagePreviewPanel svgImagePreviewPanel;
 
-    private static final Logger logger = Logger.getLogger(SVGImagePreviewPanel.class.getName());
+    public Toolbar(SVGImagePreviewPanel svgImagePreviewPanel) {
+        this.svgImagePreviewPanel = svgImagePreviewPanel;
+        this.putClientProperty("JToolBar.isRollover", Boolean.TRUE); //NOI18N
+        this.setFloatable(false);
+        this.setName(NbBundle.getMessage(Toolbar.class, "ACSN_Toolbar"));
 
-    private Toolbar() {}
-
-    public JToolBar createToolBar() {
-
-        // Definition of toolbar.
-        JToolBar toolBar = new JToolBar();
-        toolBar.putClientProperty("JToolBar.isRollover", Boolean.TRUE); //NOI18N
-        toolBar.setFloatable(false);
-        toolBar.setName(NbBundle.getMessage(Toolbar.class, "ACSN_Toolbar"));
-
-        toolBar.add(getExportButton());
-        toolBar.add(getZoomInButton());
-        toolBar.add(getZoomOutButton());
-        toolBar.add(getResetButton());
-        toolBar.add(getCWRotateButton());
-        toolBar.add(getCCWRotateButton());
-        toolBar.add(getOpenInBrowserButton());
-        toolBar.add(getQuickHelpLabel());
-
-        return toolBar;
+        this.add(getExportButton());
+        this.add(getZoomInButton());
+        this.add(getZoomOutButton());
+        this.add(getResetButton());
+        this.add(getCWRotateButton());
+        this.add(getCCWRotateButton());
+        this.add(getOpenInBrowserButton());
+        this.add(getQuickHelpLabel());
     }
 
     public JLabel getQuickHelpLabel() {
@@ -160,37 +148,4 @@ public class Toolbar {
         return button;
     }
 
-    private static Toolbar instance;
-
-    public static Toolbar instance() {
-        if (instance == null) {
-            instance = new Toolbar();
-        }
-
-        return instance;
-    }
-
-    public AffineTransform getCurrentAt() {
-        return currentAt;
-    }
-
-    public void setCurrentAt(AffineTransform currentAt) {
-        this.currentAt = currentAt;
-    }
-
-    public PUMLJSVGCanvas getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas(PUMLJSVGCanvas canvas) {
-        this.canvas = canvas;
-    }
-
-    public SVGImagePreviewPanel getSvgImagePreviewPanel() {
-        return svgImagePreviewPanel;
-    }
-
-    public void setSvgImagePreviewPanel(SVGImagePreviewPanel svgImagePreviewPanel) {
-        this.svgImagePreviewPanel = svgImagePreviewPanel;
-    }
 }
