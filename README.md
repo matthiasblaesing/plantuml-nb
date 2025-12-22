@@ -2,6 +2,20 @@
 
 Netbeans plugin that wraps PlantUML to provide its functionality from within Netbeans.
 
+### Version 1.14
+
+    * Feature: Add MultiView implementation to enable rendering inside editor.
+               With the ability to "clone" or "split" editors this allows users
+               to keep multiple diagrams open
+    * Feature: Update to latest version of batik (1.19)
+    * Feature: Update to latest version of PlantUML (1.2025.10)
+    * Cleanup: Remove unused dependencies and .form files and classes
+    * Cleanup: Remove unused string from bundle and move it to @Messages annotation
+    * Cleanup: Decouple CopyToClip and ExportAction from pumlVisualElement and
+               use Lookup to transfer DataObject to actions (switch to NetBeans
+               built-in mechanism)
+    * Cleanup: Fix whitespace and cleanup warnings
+
 ### Version 1.13
 
     * Feature: Update to latest version of batik (1.17)
