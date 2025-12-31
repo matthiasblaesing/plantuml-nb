@@ -2,6 +2,12 @@
 
 Netbeans plugin that wraps PlantUML to provide its functionality from within Netbeans.
 
+### Version 1.15
+    * Bugfix:  Add missing dependency ant (prevents class diagramms from being
+               generated)
+    * Bugfix:  Remove duplicate dependencies (plantuml declares dependencies and
+               shades them)
+
 ### Version 1.14
 
     * Feature: Add MultiView implementation to enable rendering inside editor.
