@@ -53,7 +53,6 @@ import org.openide.util.NbBundle;
 import org.openide.util.RequestProcessor;
 
 import static org.netbeans.modules.plantumlnb.StringUtils.isNotEmpty;
-import static org.netbeans.modules.plantumlnb.ui.wizard.Bundle.PlantUMLVisualPanel1_destinationDirectoryButton_text;
 
 public final class PlantUMLVisualPanel1 extends JPanel {
 
@@ -348,9 +347,8 @@ public final class PlantUMLVisualPanel1 extends JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @NbBundle.Messages("PlantUMLVisualPanel1.destinationDirectoryButton.text=...")
     private void destinationDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_destinationDirectoryButtonActionPerformed
-        String returnVal = showOpenDialog(PlantUMLVisualPanel1_destinationDirectoryButton_text());
+        String returnVal = showOpenDialog(NbBundle.getMessage(PlantUMLVisualPanel1.class, "PlantUMLVisualPanel1.destinationDirectoryButton.text"));
         if(returnVal != null) {
             destinationDirectoryTextField.setText(returnVal);
             destinationDirectoryTextField.setToolTipText(returnVal);

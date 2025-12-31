@@ -49,14 +49,12 @@ import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.ImageUtilities;
-import org.openide.util.NbBundle.Messages;
 
 // TODO define position attribute
 @TemplateRegistration(folder = "PlantUML",
         displayName = "#PlantUMLWizardIterator_displayName",
         iconBase = "org/netbeans/modules/plantumlnb/icon.png",
         description = "PlantUMLFromExistingSourcesDescription.html")
-@Messages("PlantUMLWizardIterator_displayName=PlantUML from existing java sources")
 public final class PlantUMLWizardIterator implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     private static final Logger LOG = Logger.getLogger(PlantUMLWizardIterator.class.getName());
